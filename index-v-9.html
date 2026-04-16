@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cónsul Jurídico — Iván Cónsul Gómez · Abogado · Fraga</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8102E;
+    --red-dark: #9B0C22;
+    --red-soft: rgba(200,16,46,0.08);
+    --black: #111111;
+    --dark: #1E1E1E;
+    --text: #2C2C2C;
+    --mid: #6B6B6B;
+    --light: #F0EDE8;
+    --lighter: #F8F6F3;
+    --white: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Inter',sans-serif; font-weight:300; background:var(--white); color:var(--text); overflow-x:hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(255,255,255,0.96);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:0 56px; height:68px;
+    display:flex; align-items:center; justify-content:space-between;
+    box-shadow: 0 1px 24px rgba(0,0,0,0.06);
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .nav-badge {
+    width:38px; height:38px; border-radius:50%;
+    border:2px solid var(--red);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:12px; font-weight:700; color:var(--red);
+  }
+  .nav-name { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; color:var(--black); letter-spacing:0.04em; }
+  .nav-sub { font-size:9px; letter-spacing:0.3em; color:var(--mid); text-transform:uppercase; margin-top:2px; }
+  .nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
+  .nav-links a { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; }
+  .nav-links a:hover { color:var(--black); }
+  .nav-cta {
+    background:var(--red); color:white !important;
+    padding:10px 24px; font-size:10px !important; letter-spacing:0.25em !important;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background:var(--red-dark) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height:100vh; padding-top:68px;
+    display:grid; grid-template-columns:1fr 1fr;
+    position:relative; overflow:hidden;
+  }
+  .hero-left {
+    background: linear-gradient(160deg, #FFFFFF 0%, #F5F0EA 60%, #EDE5D8 100%);
+    padding:80px 64px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative; z-index:1;
+  }
+  .hero-left::after {
+    content:'';
+    position:absolute; top:0; right:0; bottom:0; width:1px;
+    background: linear-gradient(180deg, transparent, rgba(200,16,46,0.2), transparent);
+  }
+  .hero-eyebrow { display:flex; align-items:center; gap:10px; margin-bottom:24px; }
+  .hero-line { width:28px; height:1px; background:var(--red); }
+  .eyebrow-text { font-size:10px; letter-spacing:0.4em; color:var(--red); text-transform:uppercase; }
+  .hero-left h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(38px,4.5vw,58px);
+    font-weight:700; color:var(--black);
+    line-height:1.12; margin-bottom:10px;
+  }
+  .hero-left h1 em { font-style:italic; color:var(--red); }
+  .hero-tagline {
+    font-family:'Playfair Display',serif;
+    font-style:italic; font-size:18px; color:var(--mid);
+    margin-bottom:28px; line-height:1.5;
+  }
+  .hero-desc {
+    font-size:15px; line-height:1.85; color:#555;
+    margin-bottom:44px; max-width:460px;
+  }
+  .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary {
+    background:var(--red); color:white;
+    padding:15px 36px; font-size:11px; letter-spacing:0.25em;
+    text-transform:uppercase; text-decoration:none;
+    border:none; cursor:pointer; transition:background .2s;
+    font-family:'Inter',sans-serif; font-weight:500;
+  }
+  .btn-primary:hover { background:var(--red-dark); }
+  .btn-outline {
+    background:transparent; color:var(--text);
+    padding:15px 36px; font-size:11px; letter-spacing:0.2em;
+    text-transform:uppercase; text-decoration:none;
+    border:1.5px solid rgba(0,0,0,0.18); transition:all .2s;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-outline:hover { border-color:var(--black); color:var(--black); }
+
+  /* Hero right — image + overlay stats */
+  .hero-right {
+    position:relative; overflow:hidden; min-height:600px;
+    background-image: url('ivan-consul-apreton-de-manos.png');
+    background-size: cover;
+    background-position: center 64%;
+  }
+  .hero-img { display:none; }
+  .hero-right::before {
+    content:'';
+    position:absolute; inset:0;
+    background:rgba(0,0,0,0.18);
+    z-index:0;
+  }
+  .hero-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(200,16,46,0.15) 0%, rgba(0,0,0,0.35) 100%);
+    z-index:1;
+  }
+  .hero-stats-overlay {
+    position:absolute; bottom:0; left:0; right:0;
+    display:grid; grid-template-columns:repeat(3,1fr);
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(8px);
+    z-index:2;
+  }
+  .stat-box {
+    padding:22px 20px;
+    border-right:1px solid var(--border);
+    text-align:center;
+  }
+  .stat-box:last-child { border-right:none; }
+  .stat-num {
+    font-family:'Playfair Display',serif;
+    font-size:30px; font-weight:700; color:var(--red); line-height:1;
+    margin-bottom:4px;
+  }
+  .stat-label { font-size:10px; letter-spacing:0.2em; color:var(--mid); text-transform:uppercase; }
+
+  /* ── BAND ── */
+  .band {
+    background: linear-gradient(90deg, var(--red-dark), var(--red));
+    padding:24px 56px; text-align:center;
+  }
+  .band p {
+    font-family:'Playfair Display',serif; font-style:italic;
+    font-size:clamp(14px,1.5vw,19px); color:white; opacity:.95;
+  }
+  .band span {
+    font-style:normal; font-size:10px; letter-spacing:0.3em;
+    text-transform:uppercase; opacity:.65; display:block; margin-top:5px;
+  }
+  .band-online {
+    font-style:normal; font-size:10px; letter-spacing:0.3em;
+    text-transform:uppercase; color:rgba(255,255,255,0.75);
+    display:block; margin-top:10px;
+    border-top:1px solid rgba(255,255,255,0.15); padding-top:10px;
+  }
+
+  /* ── INTRO VALORES ── */
+  .valores-section {
+    padding:80px 56px;
+    background: linear-gradient(180deg, var(--lighter) 0%, var(--white) 100%);
+  }
+  .valores-inner { max-width:1200px; margin:0 auto; }
+  .valores-intro {
+    text-align:center; max-width:640px; margin:0 auto 56px;
+  }
+  .section-label {
+    font-size:10px; letter-spacing:0.4em; color:var(--red);
+    text-transform:uppercase; margin-bottom:14px; display:block;
+  }
+  .section-title {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(26px,3vw,40px); font-weight:700;
+    color:var(--black); line-height:1.2;
+  }
+  .section-title em { font-style:italic; color:var(--red); }
+  .valores-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+  .valor-card {
+    background:var(--white);
+    padding:36px 28px; text-align:center;
+    border:1px solid var(--border);
+    transition:all .2s; cursor:default;
+  }
+  .valor-card:hover { border-color:rgba(200,16,46,0.3); transform:translateY(-3px); box-shadow:0 8px 32px rgba(200,16,46,0.08); }
+  .valor-icon { font-size:28px; margin-bottom:14px; display:block; }
+  .valor-title { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:var(--black); margin-bottom:8px; }
+  .valor-desc { font-size:12px; color:var(--mid); line-height:1.7; }
+
+  /* ── SERVICIOS ── */
+  .servicios-section { padding:80px 56px; background:var(--white); }
+  .servicios-inner { max-width:1200px; margin:0 auto; }
+  .servicios-header { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:end; margin-bottom:56px; }
+  .servicios-header-desc { font-size:14px; color:var(--mid); line-height:1.8; }
+  .servicios-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .servicio-card {
+    border:1px solid var(--border); overflow:hidden;
+    transition:all .25s; position:relative;
+  }
+  .servicio-card:hover { box-shadow:0 12px 40px rgba(0,0,0,0.1); transform:translateY(-4px); }
+  .servicio-img-wrap { height:200px; overflow:hidden; position:relative; }
+  .servicio-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+  .servicio-card:hover .servicio-img-wrap img { transform:scale(1.04); }
+  .servicio-img-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5) 100%);
+  }
+  .servicio-num-overlay {
+    position:absolute; top:14px; right:14px;
+    background:var(--red); color:white;
+    font-family:'Playfair Display',serif; font-size:13px; font-weight:700;
+    width:32px; height:32px; display:flex; align-items:center; justify-content:center;
+  }
+  .servicio-body { padding:28px; background:var(--white); }
+  .servicio-title { font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:var(--black); margin-bottom:12px; }
+  .servicio-desc { font-size:13px; color:var(--mid); line-height:1.8; margin-bottom:20px; }
+  .servicio-list { list-style:none; display:flex; flex-direction:column; gap:7px; }
+  .servicio-list li { font-size:12px; color:#555; padding-left:14px; position:relative; }
+  .servicio-list li::before { content:'—'; position:absolute; left:0; color:var(--red); font-size:10px; top:1px; }
+  .servicio-cta {
+    display:inline-block; margin-top:20px;
+    font-size:10px; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--red); text-decoration:none; border-bottom:1px solid rgba(200,16,46,0.3);
+    padding-bottom:2px; transition:border-color .2s;
+  }
+  .servicio-cta:hover { border-color:var(--red); }
+
+  /* ── IVÁN ── */
+  .ivan-section {
+    background: linear-gradient(160deg, #1A1A1A 0%, #2A1A1E 100%);
+    padding:100px 56px; position:relative; overflow:hidden;
+  }
+  .ivan-section::before {
+    content:'';
+    position:absolute; top:0; right:0; width:40%; height:100%;
+    background: linear-gradient(270deg, rgba(200,16,46,0.08) 0%, transparent 100%);
+  }
+  .ivan-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; position:relative; z-index:1; }
+  .ivan-img-wrap {
+    position:relative; border-radius:2px; overflow:hidden;
+    height:520px;
+  }
+  .ivan-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:top center; filter:brightness(0.88) saturate(0.85); }
+  .ivan-img-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 50%, rgba(200,16,46,0.2) 100%);
+  }
+  .ivan-img-badge {
+    position:absolute; bottom:0; left:0; right:0;
+    background:rgba(200,16,46,0.9);
+    padding:16px 24px;
+  }
+  .ivan-img-badge-name { font-family:'Playfair Display',serif; font-size:16px; color:white; font-weight:600; }
+  .ivan-img-badge-title { font-size:10px; letter-spacing:0.25em; color:rgba(255,255,255,0.7); text-transform:uppercase; margin-top:3px; }
+  .ivan-content .section-label { color:rgba(200,16,46,0.8); }
+  .ivan-title { font-family:'Playfair Display',serif; font-size:clamp(24px,2.5vw,36px); font-weight:700; color:white; line-height:1.3; margin-bottom:24px; }
+  .ivan-title em { font-style:italic; color:rgba(200,16,46,0.9); }
+  .ivan-quote {
+    border-left:3px solid var(--red);
+    padding:20px 24px;
+    background:rgba(255,255,255,0.04);
+    margin-bottom:28px;
+  }
+  .ivan-quote p { font-family:'Playfair Display',serif; font-style:italic; font-size:17px; color:rgba(255,255,255,0.8); line-height:1.6; }
+  .ivan-bio { font-size:14px; line-height:1.9; color:rgba(255,255,255,0.5); margin-bottom:32px; }
+  .ivan-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .ivan-tag { border:1px solid rgba(200,16,46,0.4); color:rgba(200,16,46,0.8); font-size:10px; letter-spacing:0.25em; text-transform:uppercase; padding:7px 16px; }
+
+  /* ── PROCESO ── */
+  .proceso-section {
+    padding:100px 56px;
+    background: linear-gradient(180deg, var(--lighter) 0%, var(--light) 100%);
+  }
+  .proceso-inner { max-width:1200px; margin:0 auto; }
+  .proceso-header { text-align:center; max-width:560px; margin:0 auto 64px; }
+  .proceso-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+  .paso {
+    background:white; padding:40px 30px;
+    border:1px solid var(--border); margin-right:-1px;
+    position:relative; transition:all .2s;
+  }
+  .paso:hover { z-index:1; border-color:rgba(200,16,46,0.3); box-shadow:0 8px 32px rgba(200,16,46,0.08); }
+  .paso-top { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+  .paso-num-circle {
+    width:36px; height:36px; border-radius:50%;
+    background:var(--red-soft); border:1.5px solid rgba(200,16,46,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--red);
+    flex-shrink:0;
+  }
+  .paso-title { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:var(--black); }
+  .paso-desc { font-size:13px; color:var(--mid); line-height:1.75; }
+  .paso-arrow {
+    position:absolute; right:-13px; top:50%;
+    transform:translateY(-50%);
+    width:26px; height:26px; border-radius:50%;
+    background:white; border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--red); z-index:2;
+  }
+  .paso:last-child .paso-arrow { display:none; }
+
+  /* ── CONTACTO ── */
+  .contacto-section {
+    padding:100px 56px;
+    background: linear-gradient(180deg, var(--white) 0%, var(--lighter) 100%);
+  }
+  .contacto-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  .contacto-title { font-family:'Playfair Display',serif; font-size:clamp(28px,3vw,44px); font-weight:700; color:var(--black); line-height:1.2; margin-bottom:32px; }
+  .contacto-title em { font-style:italic; color:var(--red); }
+  .contacto-intro { font-size:14px; color:var(--mid); line-height:1.8; margin-bottom:40px; }
+  .contacto-items { display:flex; flex-direction:column; gap:20px; }
+  .citem { display:flex; gap:16px; align-items:flex-start; }
+  .citem-icon {
+    width:44px; height:44px; flex-shrink:0;
+    background:var(--red-soft);
+    border:1px solid rgba(200,16,46,0.2);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+  }
+  .citem-label { font-size:9px; letter-spacing:0.3em; color:var(--red); text-transform:uppercase; margin-bottom:3px; }
+  .citem-val { font-size:14px; color:var(--black); font-weight:400; }
+  .citem-sub { font-size:12px; color:var(--mid); margin-top:2px; }
+
+  /* Form */
+  .form-card {
+    background:white;
+    border:1px solid var(--border);
+    padding:44px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  }
+  .form-card-title { font-family:'Playfair Display',serif; font-style:italic; font-size:22px; color:var(--black); margin-bottom:28px; }
+  .form-group { margin-bottom:18px; }
+  .form-label { display:block; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--mid); margin-bottom:8px; }
+  .form-input {
+    width:100%; border:1px solid var(--border);
+    background:var(--lighter); padding:13px 16px;
+    font-size:13px; color:var(--text);
+    font-family:'Inter',sans-serif; outline:none;
+    transition:border-color .2s;
+  }
+  .form-input:focus { border-color:rgba(200,16,46,0.4); background:white; }
+  .form-input::placeholder { color:rgba(0,0,0,0.25); }
+  select.form-input { appearance:none; cursor:pointer; }
+  textarea.form-input { resize:none; height:110px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-submit {
+    width:100%; background:var(--red); color:white;
+    border:none; padding:16px;
+    font-size:11px; letter-spacing:0.3em; text-transform:uppercase;
+    cursor:pointer; font-family:'Inter',sans-serif; font-weight:500;
+    margin-top:8px; transition:background .2s;
+  }
+  .form-submit:hover { background:var(--red-dark); }
+  .form-disclaimer { font-size:10px; color:var(--mid); text-align:center; margin-top:12px; line-height:1.6; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: linear-gradient(90deg, #111 0%, #1A1A1A 100%);
+    padding:40px 56px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(200,16,46,0.2);
+  }
+  .footer-brand { font-family:'Playfair Display',serif; font-size:14px; font-weight:600; color:white; letter-spacing:0.08em; }
+  .footer-copy { font-size:11px; color:rgba(255,255,255,0.25); }
+  .footer-velia { font-size:10px; color:rgba(255,255,255,0.2); letter-spacing:0.1em; }
+  .footer-velia span { color:rgba(255,255,255,0.4); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    nav { padding:0 24px; }
+    .nav-links { display:none; }
+    .hero { grid-template-columns:1fr; }
+    .hero-left { padding:60px 24px; }
+    .hero-right { height:380px; background-image: url('ivan-consul-apreton-crop.png'); background-position: center center; }
+    .hero-right .hero-img { object-position: center 40%; }
+    .band { padding:18px 24px; }
+    .valores-section,.servicios-section,.proceso-section,.contacto-section { padding:60px 24px; }
+    .ivan-section { padding:60px 24px; }
+    .valores-grid { grid-template-columns:1fr 1fr; }
+    .servicios-grid,.servicios-header { grid-template-columns:1fr; gap:24px; }
+    .proceso-steps { grid-template-columns:1fr 1fr; }
+    .paso-arrow { display:none; }
+    .ivan-inner,.contacto-inner { grid-template-columns:1fr; gap:40px; }
+    .ivan-img-wrap { height:360px; }
+    .form-card { padding:28px; }
+    .form-row { grid-template-columns:1fr; }
+    footer { flex-direction:column; gap:14px; text-align:center; padding:28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-badge">CJ</div>
+    <div>
+      <div class="nav-name">Cónsul Jurídico</div>
+      <div class="nav-sub">Abogados · Fraga</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#despacho">El despacho</a></li>
+    <li><a href="#proceso">Cómo trabajamos</a></li>
+    <li><a href="#contacto" class="nav-cta">Consulta gratuita</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span class="eyebrow-text">Abogado y Gestor Administrativo · Fraga</span>
+    </div>
+    <h1>Tu situación<br>tiene <em>solución.</em></h1>
+    <p class="hero-tagline">Cercanía, comprensión y profesionalidad<br>en cada caso.</p>
+    <p class="hero-desc">En Cónsul Jurídico acompañamos a personas, familias y empresas en los momentos más decisivos: regularizar tu situación, recuperar la estabilidad económica o proteger tu negocio. Escuchamos primero, actuamos después.</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">Consulta gratuita</a>
+      <a href="#servicios" class="btn-outline">Ver servicios</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img" src="ivan-consul-apreton-de-manos.png" alt="Asesoramiento legal cercano">
+    <div class="hero-overlay"></div>
+    <div class="hero-stats-overlay">
+      <div class="stat-box"><div class="stat-num">+18</div><div class="stat-label">Años de experiencia</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Especialidades</div></div>
+      <div class="stat-box"><div class="stat-num">1ª</div><div class="stat-label">Consulta gratuita</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<div class="band">
+  <p>"Ad Auxilium vocatus — vocación de ayuda al prójimo."
+  <span>Iván Cónsul Gómez · Abogado y Gestor Administrativo</span>
+  <span class="band-online">· Consulta online disponible · Atendemos desde cualquier lugar ·</span>
+  </p>
+</div>
+
+<!-- VALORES -->
+<section class="valores-section">
+  <div class="valores-inner">
+    <div class="valores-intro">
+      <span class="section-label">Por qué elegirnos</span>
+      <h2 class="section-title">Un despacho que<br><em>escucha</em> de verdad</h2>
+    </div>
+    <div class="valores-grid">
+      <div class="valor-card">
+        <span class="valor-icon">🤝</span>
+        <h3 class="valor-title">Cercanía</h3>
+        <p class="valor-desc">Tratamos cada caso como si fuera el único. Siempre accesibles, siempre disponibles.</p>
+      </div>
+      <div class="valor-card">
+        <span class="valor-icon">⚖️</span>
+        <h3 class="valor-title">Honestidad</h3>
+        <p class="valor-desc">Te decimos la verdad desde el primer momento, aunque no sea lo que esperabas escuchar.</p>
+      </div>
+      <div class="valor-card">
+        <span class="valor-icon">🎯</span>
+        <h3 class="valor-title">Especialización</h3>
+        <p class="valor-desc">Años de experiencia en Extranjería, Derecho Mercantil y Segunda Oportunidad.</p>
+      </div>
+      <div class="valor-card">
+        <span class="valor-icon">💬</span>
+        <h3 class="valor-title">Comunicación</h3>
+        <p class="valor-desc">Te mantenemos informado en cada paso. Sin tecnicismos, sin esperas innecesarias.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="servicios-section" id="servicios">
+  <div class="servicios-inner">
+    <div class="servicios-header">
+      <div>
+        <span class="section-label">Áreas de práctica</span>
+        <h2 class="section-title">En qué podemos<br><em>ayudarte</em></h2>
+      </div>
+      <p class="servicios-header-desc">Tres especialidades en las que llevamos años consiguiendo resultados reales para personas reales. Primera consulta siempre gratuita y sin compromiso. Atención presencial y online.</p>
+    </div>
+    <div class="servicios-grid">
+
+      <div class="servicio-card">
+        <div class="servicio-img-wrap">
+          <img src="ivan-consul-despacho-2.png" alt="Extranjería y Nacionalidad">
+          <div class="servicio-img-overlay"></div>
+          <div class="servicio-num-overlay">01</div>
+        </div>
+        <div class="servicio-body">
+          <h3 class="servicio-title">Extranjería y Nacionalidad</h3>
+          <p class="servicio-desc">Acompañamos a extranjeros en todo el proceso para regularizar su situación, obtener la residencia y, cuando es posible, la nacionalidad española. También gestionamos tu caso desde el extranjero.</p>
+          <ul class="servicio-list">
+            <li>Autorización de residencia y trabajo</li>
+            <li>Reagrupación familiar</li>
+            <li>Nacionalidad por residencia</li>
+            <li>Tarjeta de larga duración</li>
+            <li>Recursos ante denegaciones</li>
+          </ul>
+          <a href="#contacto" class="servicio-cta">Consultar caso →</a>
+        </div>
+      </div>
+
+      <div class="servicio-card">
+        <div class="servicio-img-wrap">
+          <img src="ivan-consul-mercantil.png" alt="Derecho Mercantil">
+          <div class="servicio-img-overlay"></div>
+          <div class="servicio-num-overlay">02</div>
+        </div>
+        <div class="servicio-body">
+          <h3 class="servicio-title">Derecho Mercantil</h3>
+          <p class="servicio-desc">Asesoramiento legal para empresas, autónomos y sociedades en sus relaciones comerciales y empresariales. Protegemos tu negocio en cada etapa.</p>
+          <ul class="servicio-list">
+            <li>Constitución y disolución de sociedades</li>
+            <li>Contratos mercantiles y comerciales</li>
+            <li>Reclamación de deudas entre empresas</li>
+            <li>Fusiones, escisiones y transmisiones</li>
+            <li>Asesoramiento a autónomos y pymes</li>
+          </ul>
+          <a href="#contacto" class="servicio-cta">Consultar caso →</a>
+        </div>
+      </div>
+
+      <div class="servicio-card">
+        <div class="servicio-img-wrap">
+          <img src="ivan-consul-firma-docus.png" alt="Segunda Oportunidad">
+          <div class="servicio-img-overlay"></div>
+          <div class="servicio-num-overlay">03</div>
+        </div>
+        <div class="servicio-body">
+          <h3 class="servicio-title">Segunda Oportunidad</h3>
+          <p class="servicio-desc">La Ley de Segunda Oportunidad permite a personas con deudas insostenibles comenzar de nuevo. Te guiamos en todo el proceso para recuperar tu estabilidad.</p>
+          <ul class="servicio-list">
+            <li>Cancelación de deudas con bancos</li>
+            <li>Exoneración del pasivo insatisfecho</li>
+            <li>Negociación extrajudicial</li>
+            <li>Concurso de acreedores</li>
+            <li>Protección frente a embargos</li>
+          </ul>
+          <a href="#contacto" class="servicio-cta">Consultar caso →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- IVÁN -->
+<section class="ivan-section" id="despacho">
+  <div class="ivan-inner">
+    <div class="ivan-img-wrap">
+      <img src="ivan-consul.png" alt="Iván Cónsul Gómez — Abogado">
+      <div class="ivan-img-overlay"></div>
+      <div class="ivan-img-badge">
+        <div class="ivan-img-badge-name">Iván Cónsul Gómez</div>
+        <div class="ivan-img-badge-title">Abogado y Gestor Administrativo · Fraga</div>
+      </div>
+    </div>
+    <div class="ivan-content">
+      <span class="section-label">El despacho</span>
+      <h2 class="ivan-title">Más que un abogado.<br>Un aliado en tu <em>proceso.</em></h2>
+      <div class="ivan-quote">
+        <p>"Un buen abogado no solo conoce la ley. Escucha, comprende y actúa pensando siempre en el bienestar de quien confía en él."</p>
+      </div>
+      <p class="ivan-bio">Iván Cónsul Gómez es Abogado y Gestor Administrativo con despacho en Fraga. Especializado en Extranjería y Nacionalidad, Derecho Mercantil y Segunda Oportunidad, ha acompañado a cientos de personas, familias y empresas a resolver situaciones complejas con rigor, honestidad y un trato verdaderamente cercano.<br><br>Su filosofía es sencilla: antes de actuar, escuchar. Antes de prometer, analizar. Y siempre, resultados por delante.</p>
+      <div class="ivan-tags">
+        <span class="ivan-tag">Cercanía</span>
+        <span class="ivan-tag">Honestidad</span>
+        <span class="ivan-tag">Compromiso</span>
+        <span class="ivan-tag">Resultados</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="proceso-section" id="proceso">
+  <div class="proceso-inner">
+    <div class="proceso-header">
+      <span class="section-label">Cómo trabajamos</span>
+      <h2 class="section-title">Tu caso, paso<br>a <em>paso</em></h2>
+    </div>
+    <div class="proceso-steps">
+      <div class="paso">
+        <div class="paso-top">
+          <div class="paso-num-circle">01</div>
+          <h3 class="paso-title">Primera consulta</h3>
+        </div>
+        <p class="paso-desc">Gratuita y sin compromiso. Analizamos tu situación y te explicamos las opciones reales que tienes. Presencial u online.</p>
+        <div class="paso-arrow">→</div>
+      </div>
+      <div class="paso">
+        <div class="paso-top">
+          <div class="paso-num-circle">02</div>
+          <h3 class="paso-title">Estudio del caso</h3>
+        </div>
+        <p class="paso-desc">Revisamos toda la documentación y diseñamos la estrategia más sólida para tu expediente.</p>
+        <div class="paso-arrow">→</div>
+      </div>
+      <div class="paso">
+        <div class="paso-top">
+          <div class="paso-num-circle">03</div>
+          <h3 class="paso-title">Gestión completa</h3>
+        </div>
+        <p class="paso-desc">Nos encargamos de todos los trámites, plazos y comunicaciones. Tú confías, nosotros actuamos.</p>
+        <div class="paso-arrow">→</div>
+      </div>
+      <div class="paso">
+        <div class="paso-top">
+          <div class="paso-num-circle">04</div>
+          <h3 class="paso-title">Resolución</h3>
+        </div>
+        <p class="paso-desc">Te informamos de cada avance y te acompañamos hasta la resolución definitiva de tu caso.</p>
+        <div class="paso-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto-section" id="contacto">
+  <div class="contacto-inner">
+    <div>
+      <span class="section-label">Contacto</span>
+      <h2 class="contacto-title">Cuéntanos<br>tu <em>situación.</em></h2>
+      <p class="contacto-intro">La primera consulta es siempre gratuita y sin compromiso. Analizamos tu caso y te decimos con honestidad qué podemos hacer por ti. Atendemos de forma presencial y online.</p>
+      <div class="contacto-items">
+        <div class="citem">
+          <div class="citem-icon">📍</div>
+          <div>
+            <div class="citem-label">Despacho</div>
+            <div class="citem-val">Avenida de Aragón 117, 1ºB · Fraga (Huesca)</div>
+            <div class="citem-sub">Atención presencial y telemática</div>
+          </div>
+        </div>
+        <div class="citem">
+          <div class="citem-icon">📞</div>
+          <div>
+            <div class="citem-label">Teléfono</div>
+            <div class="citem-val">Consultar en web</div>
+            <div class="citem-sub">Lunes a viernes · 9:00 – 19:00h</div>
+          </div>
+        </div>
+        <div class="citem">
+          <div class="citem-icon">✉️</div>
+          <div>
+            <div class="citem-label">Email</div>
+            <div class="citem-val"><a href="mailto:info@consuljuridico.com" style="color:var(--black);text-decoration:none;">info@consuljuridico.com</a></div>
+            <div class="citem-sub">Respuesta en menos de 24 horas</div>
+          </div>
+        </div>
+        <div class="citem">
+          <div class="citem-icon">💻</div>
+          <div>
+            <div class="citem-label">Consulta online</div>
+            <div class="citem-val">Disponible por videollamada</div>
+            <div class="citem-sub">Gestiona tu caso desde cualquier lugar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-card">
+      <p class="form-card-title">Solicita tu consulta gratuita</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-input" placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Apellidos</label>
+          <input type="text" class="form-input" placeholder="Tus apellidos">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" class="form-input" placeholder="+34 600 000 000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="tu@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Modalidad</label>
+        <select class="form-input">
+          <option value="">Presencial u online</option>
+          <option>Presencial en despacho</option>
+          <option>Online (videollamada)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Área de consulta</label>
+        <select class="form-input">
+          <option value="">Selecciona un área</option>
+          <option>Extranjería y Nacionalidad</option>
+          <option>Derecho Mercantil</option>
+          <option>Segunda Oportunidad</option>
+          <option>Otra consulta legal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cuéntanos tu situación</label>
+        <textarea class="form-input" placeholder="Describe brevemente tu caso..."></textarea>
+      </div>
+      <button class="form-submit">Solicitar consulta gratuita</button>
+      <p class="form-disclaimer">Tus datos son confidenciales y se usan únicamente para atender tu consulta. Primera consulta siempre gratuita.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Cónsul Jurídico · Fraga</div>
+  <div class="footer-copy">© 2026 Iván Cónsul Gómez · Todos los derechos reservados</div>
+  <div class="footer-velia">Desarrollado por <span>VELIA</span></div>
+</footer>
+
+</body>
+</html>
