@@ -791,14 +791,20 @@
           </div>
         </div>
       </div>
+
+      <!-- RESERVAR CITA CTA -->
+      <div style="margin-top:36px;">
+        <div class="reserva-divider"><span>o reserva directamente</span></div>
+        <button class="reserva-cta" onclick="openBooking()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Reservar cita online
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <p class="reserva-note">Primera consulta gratuita · 60 minutos · Elige tu fecha y hora</p>
+      </div>
     </div>
     <div class="form-card">
       <p class="form-card-title">Solicita tu consulta gratuita</p>
-      <!-- TAB SWITCH -->
-      <div style="display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid #ece7e0;">
-        <button id="tab-form" onclick="switchTab('form')" style="flex:1;padding:10px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid #C8102E;color:#C8102E;transition:all .2s;">Formulario</button>
-        <button id="tab-calendar" onclick="switchTab('calendar')" style="flex:1;padding:10px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:#9a9490;transition:all .2s;">Reservar cita online</button>
-      </div>
       <div id="panel-form">
       <div class="form-row">
         <div class="form-group">
@@ -846,32 +852,44 @@
       <button class="form-submit">Solicitar consulta gratuita</button>
       <p class="form-disclaimer">Tus datos son confidenciales y se usan únicamente para atender tu consulta. Primera consulta siempre gratuita.</p>
       </div><!-- /panel-form -->
-
-      <!-- PANEL CALENDARIO -->
-      <div id="panel-calendar" style="display:none;">
-        <p style="font-size:12px;color:#9a9490;margin-bottom:16px;line-height:1.6;">Elige el día y la hora que mejor te venga. Primera consulta siempre gratuita · 60 minutos.</p>
-        <iframe
-          src="https://portal.veliacorp.com/book/consul-juridico"
-          style="width:100%;height:560px;border:none;border-radius:8px;"
-          title="Reservar cita Cónsul Jurídico"
-          loading="lazy"
-        ></iframe>
-      </div><!-- /panel-calendar -->
-
     </div>
   </div>
 </section>
 
+<!-- MODAL RESERVAR CITA -->
+<div class="booking-overlay" id="bookingOverlay" onclick="closeBookingOutside(event)">
+  <div class="booking-modal">
+    <div class="booking-modal-header">
+      <span class="booking-modal-title">Reserva tu consulta gratuita</span>
+      <button class="booking-modal-close" onclick="closeBooking()" aria-label="Cerrar">×</button>
+    </div>
+    <iframe
+      id="bookingFrame"
+      class="booking-iframe"
+      src=""
+      title="Reservar cita Cónsul Jurídico"
+    ></iframe>
+  </div>
+</div>
+
 <script>
-function switchTab(tab) {
-  var isForm = tab === 'form';
-  document.getElementById('panel-form').style.display = isForm ? '' : 'none';
-  document.getElementById('panel-calendar').style.display = isForm ? 'none' : '';
-  document.getElementById('tab-form').style.borderBottomColor = isForm ? '#C8102E' : 'transparent';
-  document.getElementById('tab-form').style.color = isForm ? '#C8102E' : '#9a9490';
-  document.getElementById('tab-calendar').style.borderBottomColor = isForm ? 'transparent' : '#C8102E';
-  document.getElementById('tab-calendar').style.color = isForm ? '#9a9490' : '#C8102E';
+function openBooking() {
+  var overlay = document.getElementById('bookingOverlay');
+  var frame = document.getElementById('bookingFrame');
+  if (!frame.src) frame.src = 'https://portal.veliacorp.com/book/consul-juridico';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+function closeBooking() {
+  document.getElementById('bookingOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeBookingOutside(e) {
+  if (e.target === document.getElementById('bookingOverlay')) closeBooking();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeBooking();
+});
 </script>
 
 <!-- FOOTER -->
