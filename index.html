@@ -873,11 +873,14 @@
 </div>
 
 <script>
+var _bookingLoaded = false;
 function openBooking() {
-  var overlay = document.getElementById('bookingOverlay');
   var frame = document.getElementById('bookingFrame');
-  if (!frame.src) frame.src = 'https://portal.veliacorp.com/book/consul-juridico';
-  overlay.classList.add('open');
+  if (!_bookingLoaded) {
+    frame.src = 'https://portal.veliacorp.com/book/consul-juridico';
+    _bookingLoaded = true;
+  }
+  document.getElementById('bookingOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeBooking() {
