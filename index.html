@@ -432,6 +432,56 @@
   .form-submit:hover { background:var(--red-dark); }
   .form-disclaimer { font-size:10px; color:var(--mid); text-align:center; margin-top:12px; line-height:1.6; }
 
+  /* ── RESERVAR CITA ── */
+  .reserva-divider { display:flex; align-items:center; gap:14px; margin:32px 0; }
+  .reserva-divider::before,.reserva-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+  .reserva-divider span { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); white-space:nowrap; }
+
+  .reserva-cta {
+    border:1.5px solid var(--red);
+    background:transparent;
+    color:var(--red);
+    width:100%;
+    padding:15px;
+    font-size:11px; letter-spacing:0.28em; text-transform:uppercase;
+    font-family:'Inter',sans-serif; font-weight:600;
+    cursor:pointer; transition:background .2s, color .2s;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .reserva-cta:hover { background:var(--red); color:white; }
+  .reserva-cta svg { transition:transform .2s; }
+  .reserva-cta:hover svg { transform:translateX(2px); }
+  .reserva-note { font-size:10px; color:var(--mid); text-align:center; margin-top:10px; line-height:1.6; }
+
+  /* ── MODAL BOOKING ── */
+  .booking-overlay {
+    display:none; position:fixed; inset:0; z-index:9000;
+    background:rgba(17,17,17,0.55); backdrop-filter:blur(14px);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .booking-overlay.open { display:flex; }
+  .booking-modal {
+    background:white; border-radius:16px; width:100%; max-width:680px;
+    overflow:hidden; box-shadow:0 24px 80px rgba(0,0,0,0.18);
+    display:flex; flex-direction:column; max-height:90vh;
+  }
+  .booking-modal-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 24px 16px; border-bottom:1px solid #f0ece6;
+    flex-shrink:0;
+  }
+  .booking-modal-title { font-family:'Playfair Display',serif; font-size:17px; color:#111; }
+  .booking-modal-close {
+    width:32px; height:32px; border-radius:50%; border:none;
+    background:#f5f2ee; color:#888; font-size:18px; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:background .15s, color .15s;
+  }
+  .booking-modal-close:hover { background:#e8e3db; color:#111; }
+  .booking-iframe {
+    width:100%; flex:1; border:none; min-height:520px;
+  }
+
   /* ── FOOTER ── */
   footer {
     background: linear-gradient(90deg, #111 0%, #1A1A1A 100%);
@@ -744,6 +794,12 @@
     </div>
     <div class="form-card">
       <p class="form-card-title">Solicita tu consulta gratuita</p>
+      <!-- TAB SWITCH -->
+      <div style="display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid #ece7e0;">
+        <button id="tab-form" onclick="switchTab('form')" style="flex:1;padding:10px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid #C8102E;color:#C8102E;transition:all .2s;">Formulario</button>
+        <button id="tab-calendar" onclick="switchTab('calendar')" style="flex:1;padding:10px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;color:#9a9490;transition:all .2s;">Reservar cita online</button>
+      </div>
+      <div id="panel-form">
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Nombre</label>
@@ -789,9 +845,34 @@
       </div>
       <button class="form-submit">Solicitar consulta gratuita</button>
       <p class="form-disclaimer">Tus datos son confidenciales y se usan únicamente para atender tu consulta. Primera consulta siempre gratuita.</p>
+      </div><!-- /panel-form -->
+
+      <!-- PANEL CALENDARIO -->
+      <div id="panel-calendar" style="display:none;">
+        <p style="font-size:12px;color:#9a9490;margin-bottom:16px;line-height:1.6;">Elige el día y la hora que mejor te venga. Primera consulta siempre gratuita · 60 minutos.</p>
+        <iframe
+          src="https://portal.veliacorp.com/book/consul-juridico"
+          style="width:100%;height:560px;border:none;border-radius:8px;"
+          title="Reservar cita Cónsul Jurídico"
+          loading="lazy"
+        ></iframe>
+      </div><!-- /panel-calendar -->
+
     </div>
   </div>
 </section>
+
+<script>
+function switchTab(tab) {
+  var isForm = tab === 'form';
+  document.getElementById('panel-form').style.display = isForm ? '' : 'none';
+  document.getElementById('panel-calendar').style.display = isForm ? 'none' : '';
+  document.getElementById('tab-form').style.borderBottomColor = isForm ? '#C8102E' : 'transparent';
+  document.getElementById('tab-form').style.color = isForm ? '#C8102E' : '#9a9490';
+  document.getElementById('tab-calendar').style.borderBottomColor = isForm ? 'transparent' : '#C8102E';
+  document.getElementById('tab-calendar').style.color = isForm ? '#9a9490' : '#C8102E';
+}
+</script>
 
 <!-- FOOTER -->
 <footer>
