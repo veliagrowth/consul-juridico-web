@@ -266,7 +266,8 @@
     transition:border-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); cursor:default;
   }
   .valor-card:hover { border-color:rgba(200,16,46,0.3); transform:translateY(-3px); box-shadow:0 8px 32px rgba(200,16,46,0.08); }
-  .valor-icon { font-size:28px; margin-bottom:14px; display:block; }
+  .valor-icon { color:var(--red); margin-bottom:16px; display:flex; justify-content:center; }
+  .valor-icon svg { width:30px; height:30px; }
   .valor-title { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:var(--black); margin-bottom:8px; }
   .valor-desc { font-size:12px; color:var(--mid); line-height:1.7; }
 
@@ -399,8 +400,9 @@
     background:var(--red-soft);
     border:1px solid rgba(200,16,46,0.2);
     border-radius:50%;
-    display:flex; align-items:center; justify-content:center; font-size:16px;
+    display:flex; align-items:center; justify-content:center; color:var(--red);
   }
+  .citem-icon svg { width:20px; height:20px; }
   .citem-label { font-size:9px; letter-spacing:0.3em; color:var(--red); text-transform:uppercase; margin-bottom:3px; }
   .citem-val { font-size:14px; color:var(--black); font-weight:400; }
   .citem-sub { font-size:12px; color:var(--mid); margin-top:2px; }
@@ -645,22 +647,22 @@
     </div>
     <div class="valores-grid">
       <div class="valor-card">
-        <span class="valor-icon">🤝</span>
+        <span class="valor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
         <h3 class="valor-title">Cercanía</h3>
         <p class="valor-desc">Tratamos cada caso como si fuera el único. Siempre accesibles, siempre disponibles.</p>
       </div>
       <div class="valor-card">
-        <span class="valor-icon">⚖️</span>
+        <span class="valor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 21h8"/><path d="M5 7h14"/><path d="M5 7l-2.5 5a2.5 2.5 0 0 0 5 0L5 7z"/><path d="M19 7l-2.5 5a2.5 2.5 0 0 0 5 0L19 7z"/></svg></span>
         <h3 class="valor-title">Honestidad</h3>
         <p class="valor-desc">Te decimos la verdad desde el primer momento, aunque no sea lo que esperabas escuchar.</p>
       </div>
       <div class="valor-card">
-        <span class="valor-icon">🎯</span>
+        <span class="valor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></span>
         <h3 class="valor-title">Especialización</h3>
         <p class="valor-desc">Años de experiencia en Extranjería, Derecho Mercantil y Segunda Oportunidad.</p>
       </div>
       <div class="valor-card">
-        <span class="valor-icon">💬</span>
+        <span class="valor-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.5L3 21l2-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg></span>
         <h3 class="valor-title">Comunicación</h3>
         <p class="valor-desc">Te mantenemos informado en cada paso. Sin tecnicismos, sin esperas innecesarias.</p>
       </div>
@@ -825,7 +827,7 @@
       <p class="contacto-intro">La primera consulta es siempre gratuita y sin compromiso. Analizamos tu caso y te decimos con honestidad qué podemos hacer por ti. Atendemos de forma presencial y online.</p>
       <div class="contacto-items">
         <div class="citem">
-          <div class="citem-icon">📍</div>
+          <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div>
             <div class="citem-label">Despacho</div>
             <div class="citem-val">Avenida de Aragón 117, 1ºB · Fraga (Huesca)</div>
@@ -833,7 +835,7 @@
           </div>
         </div>
         <div class="citem">
-          <div class="citem-icon">📞</div>
+          <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 22 16.9z"/></svg></div>
           <div>
             <div class="citem-label">Teléfono</div>
             <div class="citem-val"><a href="tel:+34626818875" style="color:var(--black);text-decoration:none;">+34 626 81 88 75</a></div>
@@ -841,7 +843,7 @@
           </div>
         </div>
         <div class="citem">
-          <div class="citem-icon">✉️</div>
+          <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
           <div>
             <div class="citem-label">Email</div>
             <div class="citem-val"><a href="mailto:info@consuljuridico.com" style="color:var(--black);text-decoration:none;">info@consuljuridico.com</a></div>
@@ -849,7 +851,7 @@
           </div>
         </div>
         <div class="citem">
-          <div class="citem-icon">💻</div>
+          <div class="citem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
           <div>
             <div class="citem-label">Consulta online</div>
             <div class="citem-val">Disponible por videollamada</div>
