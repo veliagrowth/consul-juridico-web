@@ -369,7 +369,7 @@
     background:var(--red-soft); border:1.5px solid rgba(200,16,46,0.3);
     display:flex; align-items:center; justify-content:center;
     font-family:'Playfair Display',serif; font-size:14px; font-weight:700; color:var(--red);
-    line-height:1; flex-shrink:0;
+    line-height:1; padding-bottom:3px; flex-shrink:0;
   }
   .paso-title { font-family:'Playfair Display',serif; font-size:17px; font-weight:600; color:var(--black); }
   .paso-desc { font-size:13px; color:var(--mid); line-height:1.75; }
@@ -569,7 +569,7 @@
     .ivan-section { padding:60px 24px; }
     .valores-grid { grid-template-columns:1fr 1fr; }
     .servicios-grid,.servicios-header { grid-template-columns:1fr; gap:24px; }
-    .proceso-steps { grid-template-columns:1fr 1fr; }
+    .proceso-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
     .paso { margin-right:0; }
     .paso-arrow { display:none; }
     .ivan-inner,.contacto-inner { grid-template-columns:1fr; gap:40px; }
