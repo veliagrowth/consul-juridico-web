@@ -562,14 +562,17 @@
     .nav-links { display:none; }
     .hero { grid-template-columns:1fr; }
     .hero-left { padding:60px 24px; }
-    .hero-right { min-height:0; height:auto; aspect-ratio:1 / 1; background-image: url('consul_juridico_foto_perfil.webp'); background-position:center; background-size:cover; }
-    .hero-right .hero-img { object-position: center 40%; }
+    /* Movil: foto completa como <img> (se ven los brazos) + stats debajo, sin overlay oscuro */
+    .hero-right { min-height:0; height:auto; aspect-ratio:auto; background:none; }
+    .hero-right::before, .hero-overlay { display:none; }
+    .hero-right .hero-img { display:block; width:100%; height:auto; }
+    .hero-stats-overlay { position:static; }
     .band { padding:18px 24px; }
     .valores-section,.servicios-section,.proceso-section,.contacto-section { padding:60px 24px; }
     .ivan-section { padding:60px 24px; }
     .valores-grid { grid-template-columns:1fr 1fr; }
     .servicios-grid,.servicios-header { grid-template-columns:1fr; gap:24px; }
-    .proceso-steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .proceso-steps { grid-template-columns:1fr; }
     .paso { margin-right:0; }
     .paso-arrow { display:none; }
     .ivan-inner,.contacto-inner { grid-template-columns:1fr; gap:40px; }
@@ -615,7 +618,7 @@
     </div>
   </div>
   <div class="hero-right">
-    <img class="hero-img" src="consul_juridico_foto_perfil.png" alt="Iván Cónsul Gómez, abogado en Fraga, con el logo de Cónsul Jurídico de fondo">
+    <img class="hero-img" src="consul_juridico_foto_perfil.webp" alt="Iván Cónsul Gómez, abogado en Fraga, con el logo de Cónsul Jurídico de fondo">
     <div class="hero-overlay"></div>
     <div class="hero-stats-overlay">
       <div class="stat-box"><div class="stat-num">+18</div><div class="stat-label">Años de experiencia</div></div>
