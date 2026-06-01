@@ -460,6 +460,42 @@
   .reserva-cta:hover svg { transform:translateX(2px); }
   .reserva-note { font-size:10px; color:var(--mid); text-align:center; margin-top:10px; line-height:1.6; }
 
+  /* ── CONTACTO — CANALES (acordeón) ── */
+  .contacto-channels { display:flex; flex-direction:column; gap:16px; }
+  .channel {
+    border:1px solid var(--border); background:var(--white); border-radius:2px;
+    overflow:hidden;
+    transition:border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .channel.open { border-color:rgba(200,16,46,0.35); box-shadow:0 8px 32px rgba(200,16,46,0.07); }
+  .channel-trigger {
+    width:100%; border:none; background:transparent; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:22px 24px; text-align:left; font-family:'Inter',sans-serif;
+  }
+  .channel-trigger-main { display:flex; align-items:center; gap:16px; }
+  .channel-ico {
+    width:46px; height:46px; flex-shrink:0; border-radius:50%;
+    background:var(--red-soft); border:1px solid rgba(200,16,46,0.2);
+    display:flex; align-items:center; justify-content:center; color:var(--red);
+  }
+  .channel-txt { display:flex; flex-direction:column; gap:3px; }
+  .channel-title { font-family:'Playfair Display',serif; font-size:18px; font-weight:600; color:var(--black); }
+  .channel-sub { font-size:12px; color:var(--mid); }
+  .channel-chevron { color:var(--red); flex-shrink:0; transition:transform var(--dur-base) var(--ease-out); }
+  .channel.open .channel-chevron { transform:rotate(180deg); }
+  /* Despliegue suave: grid-template-rows 0fr→1fr (sin medir altura) */
+  .channel-body { display:grid; grid-template-rows:0fr; transition:grid-template-rows var(--dur-slow) var(--ease-out); }
+  .channel.open .channel-body { grid-template-rows:1fr; }
+  .channel-body-min { overflow:hidden; min-height:0; }
+  .channel-body-inner {
+    padding:4px 24px 26px; opacity:0; transform:translateY(-6px);
+    transition:opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .channel.open .channel-body-inner { opacity:1; transform:none; transition-delay:120ms; }
+  .channel-lead { font-size:13px; color:var(--mid); line-height:1.7; margin-bottom:18px; }
+  .channel-iframe { width:100%; border:none; min-height:560px; border-radius:8px; background:var(--lighter); display:block; }
+
   /* ── MODAL BOOKING ── */
   .booking-overlay {
     display:none; position:fixed; inset:0; z-index:9000;
@@ -526,7 +562,7 @@
     .nav-links { display:none; }
     .hero { grid-template-columns:1fr; }
     .hero-left { padding:60px 24px; }
-    .hero-right { height:380px; background-image: url('consul_juridico_foto_perfil.webp'); background-position: center 20%; }
+    .hero-right { min-height:0; height:auto; aspect-ratio:1 / 1; background-image: url('consul_juridico_foto_perfil.webp'); background-position:center; background-size:cover; }
     .hero-right .hero-img { object-position: center 40%; }
     .band { padding:18px 24px; }
     .valores-section,.servicios-section,.proceso-section,.contacto-section { padding:60px 24px; }
@@ -534,6 +570,7 @@
     .valores-grid { grid-template-columns:1fr 1fr; }
     .servicios-grid,.servicios-header { grid-template-columns:1fr; gap:24px; }
     .proceso-steps { grid-template-columns:1fr 1fr; }
+    .paso { margin-right:0; }
     .paso-arrow { display:none; }
     .ivan-inner,.contacto-inner { grid-template-columns:1fr; gap:40px; }
     .ivan-img-wrap { height:360px; }
@@ -817,22 +854,49 @@
           </div>
         </div>
       </div>
-
-      <!-- RESERVAR CITA CTA -->
-      <div style="margin-top:36px;">
-        <div class="reserva-divider"><span>o reserva directamente</span></div>
-        <button class="reserva-cta" onclick="openBooking()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Reservar cita online
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-        <p class="reserva-note">Primera consulta gratuita · 60 minutos · Elige tu fecha y hora</p>
-      </div>
     </div>
-    <div class="form-card">
-      <p class="form-card-title">Solicita tu consulta gratuita</p>
-      <div id="panel-form">
-      <div class="form-row">
+
+    <div>
+      <div class="contacto-channels">
+
+        <!-- Canal 1 — Reservar cita -->
+        <div class="channel" id="ch-reserva">
+          <button class="channel-trigger" type="button" aria-expanded="false" aria-controls="ch-reserva-body" onclick="toggleChannel('reserva')">
+            <span class="channel-trigger-main">
+              <span class="channel-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+              <span class="channel-txt">
+                <span class="channel-title">Reservar cita online</span>
+                <span class="channel-sub">Elige fecha y hora · 60 min · gratis</span>
+              </span>
+            </span>
+            <svg class="channel-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="channel-body" id="ch-reserva-body">
+            <div class="channel-body-min">
+              <div class="channel-body-inner">
+                <p class="channel-lead">Reserva directa en el calendario de Cónsul Jurídico. Primera consulta gratuita de 60 minutos, presencial u online.</p>
+                <div id="reserva-frame-wrap"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canal 2 — Formulario -->
+        <div class="channel" id="ch-form">
+          <button class="channel-trigger" type="button" aria-expanded="false" aria-controls="ch-form-body" onclick="toggleChannel('form')">
+            <span class="channel-trigger-main">
+              <span class="channel-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>
+              <span class="channel-txt">
+                <span class="channel-title">Formulario de contacto</span>
+                <span class="channel-sub">Cuéntanos tu caso · respuesta en 24 h</span>
+              </span>
+            </span>
+            <svg class="channel-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="channel-body" id="ch-form-body">
+            <div class="channel-body-min">
+              <div class="channel-body-inner">
+              <div class="form-row">
         <div class="form-group">
           <label class="form-label">Nombre</label>
           <input type="text" class="form-input" placeholder="Tu nombre">
@@ -875,9 +939,14 @@
         <label class="form-label">Cuéntanos tu situación</label>
         <textarea class="form-input" placeholder="Describe brevemente tu caso..."></textarea>
       </div>
-      <button class="form-submit">Solicitar consulta gratuita</button>
-      <p class="form-disclaimer">Tus datos son confidenciales y se usan únicamente para atender tu consulta. Primera consulta siempre gratuita.</p>
-      </div><!-- /panel-form -->
+              <button class="form-submit">Solicitar consulta gratuita</button>
+              <p class="form-disclaimer">Tus datos son confidenciales y se usan únicamente para atender tu consulta. Primera consulta siempre gratuita.</p>
+              </div><!-- /channel-body-inner -->
+            </div><!-- /channel-body-min -->
+          </div><!-- /channel-body -->
+        </div><!-- /channel ch-form -->
+
+      </div><!-- /contacto-channels -->
     </div>
   </div>
 </section>
@@ -919,6 +988,32 @@ function closeBookingOutside(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeBooking();
 });
+
+// ── Contacto: acordeón 2 canales (Reservar cita / Formulario) ──
+var _reservaLoaded = false;
+function toggleChannel(which) {
+  var reserva = document.getElementById('ch-reserva');
+  var form = document.getElementById('ch-form');
+  var target = (which === 'reserva') ? reserva : form;
+  var other  = (which === 'reserva') ? form : reserva;
+  var willOpen = !target.classList.contains('open');
+
+  // Acordeón: al abrir uno, el otro se cierra
+  other.classList.remove('open');
+  other.querySelector('.channel-trigger').setAttribute('aria-expanded', 'false');
+  target.classList.toggle('open', willOpen);
+  target.querySelector('.channel-trigger').setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+  // Cargar el calendario de reserva sólo la primera vez que se abre
+  if (which === 'reserva' && willOpen && !_reservaLoaded) {
+    var frame = document.createElement('iframe');
+    frame.className = 'channel-iframe';
+    frame.src = 'https://portal.veliacorp.com/book/consul-juridico';
+    frame.title = 'Reservar cita Cónsul Jurídico';
+    document.getElementById('reserva-frame-wrap').appendChild(frame);
+    _reservaLoaded = true;
+  }
+}
 </script>
 
 <!-- FOOTER -->
