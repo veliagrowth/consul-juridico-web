@@ -1,0 +1,122 @@
+/* ───────────────────────────────────────────────
+   Cónsul Jurídico — Blog / Actualidad
+   Hoja de estilos compartida para el listado y los artículos.
+   Para una entrada nueva: duplica una plantilla y enlaza /blog.css
+   ─────────────────────────────────────────────── */
+:root {
+  --red: #C8102E;
+  --red-dark: #9B0C22;
+  --red-soft: rgba(200,16,46,0.08);
+  --black: #111111;
+  --text: #2C2C2C;
+  --mid: #6B6B6B;
+  --light: #F0EDE8;
+  --lighter: #F8F6F3;
+  --white: #FFFFFF;
+  --border: rgba(0,0,0,0.08);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-base: 200ms;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
+body { font-family:'Inter',sans-serif; font-weight:300; background:var(--white); color:var(--text); overflow-x:hidden; line-height:1.6; }
+a { color:inherit; }
+
+/* ── NAV (compartida con la home) ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border); padding:0 56px; height:68px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 1px 24px rgba(0,0,0,0.06);
+}
+.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-badge { width:38px; height:38px; border-radius:50%; border:2px solid var(--red); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:12px; font-weight:700; color:var(--red); }
+.nav-name { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; color:var(--black); letter-spacing:0.04em; }
+.nav-sub { font-size:9px; letter-spacing:0.3em; color:var(--mid); text-transform:uppercase; margin-top:2px; }
+.nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
+.nav-links a { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; }
+.nav-links a:hover { color:var(--black); }
+.nav-cta { background:var(--red); color:white !important; padding:10px 24px; font-size:10px !important; letter-spacing:0.25em !important; transition:background .2s !important; }
+.nav-cta:hover { background:var(--red-dark) !important; }
+
+/* ── CABECERA DE LISTADO / ARTÍCULO ── */
+.blog-hero { padding:128px 56px 56px; background:linear-gradient(160deg, #FFFFFF 0%, #F5F0EA 70%, #EDE5D8 100%); border-bottom:1px solid var(--border); }
+.blog-hero-inner { max-width:780px; margin:0 auto; }
+.crumb { display:inline-flex; align-items:center; gap:8px; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); text-decoration:none; margin-bottom:26px; transition:color .2s; }
+.crumb:hover { color:var(--red); }
+.eyebrow { font-size:10px; letter-spacing:0.4em; color:var(--red); text-transform:uppercase; display:block; margin-bottom:16px; }
+.blog-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(30px,4vw,48px); font-weight:700; color:var(--black); line-height:1.15; }
+.blog-hero h1 em { font-style:italic; color:var(--red); }
+.blog-hero .lead { font-size:16px; color:var(--mid); line-height:1.8; margin-top:22px; max-width:640px; }
+.article-meta { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:28px; }
+.article-cat { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:white; background:var(--red); padding:6px 13px; }
+.article-date { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--mid); }
+
+/* ── CUERPO DEL ARTÍCULO ── */
+.article { padding:64px 56px 40px; }
+.article-inner { max-width:680px; margin:0 auto; }
+.article-inner h2 { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--black); line-height:1.25; margin:44px 0 16px; }
+.article-inner h3 { font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:var(--black); margin:30px 0 12px; }
+.article-inner p { font-size:16px; line-height:1.75; color:#444; margin-bottom:20px; }
+.article-inner ul, .article-inner ol { margin:0 0 22px 4px; padding-left:22px; }
+.article-inner li { font-size:16px; line-height:1.7; color:#444; margin-bottom:10px; }
+.article-inner strong { color:var(--black); font-weight:500; }
+.article-inner a { color:var(--red); text-decoration:underline; text-underline-offset:3px; }
+.pull {
+  border-top:3px solid var(--red); background:var(--lighter);
+  padding:26px 28px; margin:34px 0; font-family:'Playfair Display',serif;
+  font-style:italic; font-size:19px; line-height:1.5; color:var(--black);
+}
+.note { background:var(--red-soft); border:1px solid rgba(200,16,46,0.18); padding:20px 24px; margin:30px 0; font-size:14px; line-height:1.7; color:#555; }
+.note strong { color:var(--red); }
+
+/* ── CTA FINAL ── */
+.article-cta { background:linear-gradient(160deg, #1A1A1A 0%, #2A1A1E 100%); padding:56px 56px; margin-top:48px; }
+.article-cta-inner { max-width:680px; margin:0 auto; text-align:center; }
+.article-cta h2 { font-family:'Playfair Display',serif; font-size:clamp(24px,3vw,34px); font-weight:700; color:white; line-height:1.25; margin-bottom:16px; }
+.article-cta h2 em { font-style:italic; color:rgba(200,16,46,0.9); }
+.article-cta p { font-size:15px; color:rgba(255,255,255,0.6); line-height:1.8; margin-bottom:30px; }
+.article-cta .btn-primary { background:var(--red); color:white; padding:15px 38px; font-size:11px; letter-spacing:0.25em; text-transform:uppercase; text-decoration:none; font-weight:500; display:inline-block; transition:background .2s; }
+.article-cta .btn-primary:hover { background:var(--red-dark); }
+.disclaimer { max-width:680px; margin:40px auto 0; padding:0 56px; }
+.disclaimer p { font-size:12px; color:var(--mid); line-height:1.7; }
+
+/* ── LISTADO DE ENTRADAS ── */
+.blog-list { padding:64px 56px 90px; }
+.blog-list-inner { max-width:1100px; margin:0 auto; }
+.blog-list-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.post-card { display:flex; flex-direction:column; border:1px solid var(--border); background:var(--white); text-decoration:none; transition:transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); overflow:hidden; }
+.post-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,0.08); }
+.post-img { height:180px; overflow:hidden; position:relative; }
+.post-img img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+.post-card:hover .post-img img { transform:scale(1.04); }
+.post-cat { position:absolute; top:14px; left:14px; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:white; background:rgba(200,16,46,0.92); padding:5px 11px; }
+.post-body { padding:24px 26px 28px; display:flex; flex-direction:column; flex:1; }
+.post-date { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--mid); margin-bottom:12px; }
+.post-title { font-family:'Playfair Display',serif; font-size:19px; font-weight:600; color:var(--black); line-height:1.3; margin-bottom:12px; }
+.post-excerpt { font-size:13px; color:var(--mid); line-height:1.75; margin-bottom:18px; }
+.post-more { margin-top:auto; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--red); }
+
+/* ── FOOTER ── */
+footer { background:linear-gradient(90deg, #111 0%, #1A1A1A 100%); padding:40px 56px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(200,16,46,0.2); }
+.footer-brand { font-family:'Playfair Display',serif; font-size:14px; font-weight:600; color:white; letter-spacing:0.08em; }
+.footer-copy { font-size:11px; color:rgba(255,255,255,0.25); }
+.footer-velia { font-size:10px; color:rgba(255,255,255,0.2); letter-spacing:0.1em; }
+.footer-velia span { color:rgba(255,255,255,0.4); }
+
+/* ── RESPONSIVE ── */
+.btn-primary:active { transform:scale(0.97); transition:transform 100ms var(--ease-out); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+}
+@media (max-width:900px) {
+  nav { padding:0 24px; }
+  .nav-links { display:none; }
+  .blog-hero { padding:104px 24px 44px; }
+  .article, .blog-list { padding-left:24px; padding-right:24px; }
+  .article-cta { padding:44px 24px; }
+  .disclaimer { padding:0 24px; }
+  .blog-list-grid { grid-template-columns:1fr; }
+  footer { flex-direction:column; gap:14px; text-align:center; padding:28px 24px; }
+}
