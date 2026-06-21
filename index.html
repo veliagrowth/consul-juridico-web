@@ -633,6 +633,30 @@
   .lang-opt:hover { background:var(--lighter); }
   .lang-opt.active { color:var(--red); font-weight:500; }
 
+  /* ── TESTIMONIO EN VÍDEO ── */
+  .caso-video-btn {
+    margin-top:14px; display:inline-flex; align-items:center; gap:9px;
+    background:var(--red-soft); border:1px solid rgba(200,16,46,0.25); color:var(--red);
+    font-family:'Inter',sans-serif; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600;
+    padding:10px 16px; border-radius:6px; cursor:pointer; transition:background .2s, border-color .2s;
+  }
+  .caso-video-btn:hover { background:rgba(200,16,46,0.12); border-color:var(--red); }
+  .caso-video-btn svg { width:15px; height:15px; flex-shrink:0; }
+  .video-overlay {
+    display:none; position:fixed; inset:0; z-index:9500;
+    background:rgba(10,10,15,0.85); backdrop-filter:blur(10px);
+    align-items:center; justify-content:center; padding:24px;
+  }
+  .video-overlay.open { display:flex; }
+  .video-modal { position:relative; max-width:420px; width:auto; }
+  .video-modal video { display:block; width:100%; max-height:88vh; border-radius:12px; background:#000; box-shadow:0 24px 80px rgba(0,0,0,0.5); }
+  .video-close {
+    position:absolute; top:-14px; right:-14px; width:38px; height:38px; border-radius:50%;
+    border:none; background:#fff; color:#111; font-size:22px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.3);
+  }
+  @media(max-width:480px){ .video-close { top:8px; right:8px; opacity:0.92; } }
+
   /* ── RESPONSIVE ── */
   /* Active state — Emil Kowalski: scale(0.97) press feedback */
   .btn-primary:active, .btn-outline:active, .reserva-cta:active, .form-submit:active {
@@ -895,6 +919,10 @@
         <p class="caso-desc" data-i18n="caso.1.d">Autónomo con deudas acumuladas frente a varios acreedores. Tramitamos el Beneficio de Exoneración del Pasivo Insatisfecho (BEPI) y el juzgado acordó la cancelación de la deuda pendiente, permitiéndole empezar de nuevo.</p>
         <div class="caso-foot">
           <span class="caso-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="caso.1.r">Exoneración concedida</span></span>
+          <button class="caso-video-btn" type="button" onclick="openVideo()">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <span data-i18n="caso.1.video">Ver el testimonio en vídeo</span>
+          </button>
         </div>
       </div>
 
@@ -917,7 +945,7 @@
       </div>
 
     </div>
-    <p class="casos-disclaimer" data-i18n="casos.disclaimer">Casos reales de clientes, anonimizados para proteger su privacidad. Los resultados son orientativos: cada asunto depende de sus circunstancias concretas y no garantizan un desenlace idéntico.</p>
+    <p class="casos-disclaimer" data-i18n="casos.disclaimer">Casos reales de clientes. Los testimonios en vídeo se publican con la autorización expresa del cliente; el resto se muestran anonimizados para proteger su privacidad. Los resultados son orientativos: cada asunto depende de sus circunstancias concretas.</p>
   </div>
 </section>
 
@@ -1263,6 +1291,17 @@
   </div>
 </section>
 
+<!-- MODAL TESTIMONIO EN VÍDEO -->
+<div class="video-overlay" id="videoOverlay" onclick="closeVideoOutside(event)">
+  <div class="video-modal">
+    <button class="video-close" onclick="closeVideo()" aria-label="Cerrar">×</button>
+    <video id="testimonioVideo" controls playsinline preload="none" poster="/testimonios/segunda-oportunidad-poster.jpg">
+      <source src="/testimonios/segunda-oportunidad.mp4" type="video/mp4">
+      Tu navegador no puede reproducir este vídeo.
+    </video>
+  </div>
+</div>
+
 <!-- MODAL RESERVAR CITA -->
 <div class="booking-overlay" id="bookingOverlay" onclick="closeBookingOutside(event)">
   <div class="booking-modal">
@@ -1297,8 +1336,24 @@ function closeBooking() {
 function closeBookingOutside(e) {
   if (e.target === document.getElementById('bookingOverlay')) closeBooking();
 }
+// ── Testimonio en vídeo (controles nativos: play/pausa, audio, barra de tiempo) ──
+function openVideo() {
+  document.getElementById('videoOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  var v = document.getElementById('testimonioVideo');
+  if (v) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+}
+function closeVideo() {
+  document.getElementById('videoOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  var v = document.getElementById('testimonioVideo');
+  if (v) v.pause();
+}
+function closeVideoOutside(e) {
+  if (e.target === document.getElementById('videoOverlay')) closeVideo();
+}
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeBooking();
+  if (e.key === 'Escape') { closeBooking(); closeVideo(); }
 });
 
 // ── Contacto: acordeón 2 canales (Reservar cita / Formulario) ──
@@ -1353,8 +1408,8 @@ function toggleFaq(btn) {
       "svc.merc.t":"Commercial Law","svc.merc.d":"Legal advice for companies and the self-employed. Specialists in insolvency and the Second Chance Law for individuals and businesses that need to recover financial stability.","svc.merc.l":"<li>Incorporation, merger, spin-off or dissolution of companies</li><li>Commercial contracts</li><li>Debt recovery</li><li>Advice for the self-employed and SMEs</li><li>Second Chance Law — debt cancellation</li>",
       "svc.lab.t":"Employment Law","svc.lab.d":"We assist workers with all matters relating to their working life. We advise companies on achieving a healthy workplace through mediation, conciliation and conflict resolution.","svc.lab.l":"<li>Wage claims and dismissals</li><li>Work-life balance</li><li>Medical discharges, disability and retirement</li><li>Mediation, conciliation and conflict resolution</li><li>Workplace accidents</li>",
       "svc.fam.t":"Family Law","svc.fam.d":"We guide people through the most important and complex moments with closeness, clarity and legal rigour. We protect what matters most with discretion and respect.","svc.fam.l":"<li>Mutual-consent or contested divorces and separations</li><li>Custody, visitation and maintenance</li><li>Modification of parent-child arrangements</li><li>Division of marital property</li><li>Filiation claims (paternity, maternity)</li>",
-      "casos.label":"Real results","casos.title":"Cases we have<br><em>resolved</em>","casos.disclaimer":"Real client cases, anonymised to protect their privacy. Results are indicative: every matter depends on its specific circumstances and does not guarantee an identical outcome.",
-      "caso.1.tag":"Second Chance","caso.1.m":"Debt <em>discharged</em>","caso.1.d":"Self-employed worker with debts owed to several creditors. We filed for the discharge of unpaid debts (BEPI) and the court ordered the cancellation of the outstanding debt, allowing a fresh start.","caso.1.r":"Discharge granted",
+      "casos.label":"Real results","casos.title":"Cases we have<br><em>resolved</em>","casos.disclaimer":"Real client cases. Video testimonials are published with the client's express authorisation; the rest are shown anonymised to protect their privacy. Results are indicative: every matter depends on its specific circumstances.",
+      "caso.1.tag":"Second Chance","caso.1.m":"Debt <em>discharged</em>","caso.1.d":"Self-employed worker with debts owed to several creditors. We filed for the discharge of unpaid debts (BEPI) and the court ordered the cancellation of the outstanding debt, allowing a fresh start.","caso.1.r":"Discharge granted","caso.1.video":"Watch the video testimonial",
       "caso.2.tag":"Immigration","caso.2.m":"Residence <em>granted</em>","caso.2.d":"Person in an irregular situation after an initial refusal. We gathered the documentation, proved their roots and integration, and obtained the residence permit that lets them live and work with full guarantees.","caso.2.r":"Permit approved",
       "caso.3.tag":"Employment Law","caso.3.m":"Unfair <em>dismissal</em>","caso.3.d":"Worker dismissed without just cause. We challenged the dismissal and it was declared unfair, with the compensation and amounts owed that were legally due.","caso.3.r":"Compensation awarded",
       "proc.label":"How we work","proc.title":"Your case, step<br>by <em>step</em>","proc.s1t":"First consultation","proc.s1d":"Free and with no obligation. We analyse your situation and explain the real options you have. In person or online.","proc.s2t":"Case study","proc.s2d":"We review all the documentation and design the strongest strategy for your file.","proc.s3t":"Full management","proc.s3d":"We handle all the paperwork, deadlines and communications. You trust, we act.","proc.s4t":"Resolution","proc.s4d":"We keep you informed of every development and stay with you until the final resolution of your case.",
@@ -1376,8 +1431,8 @@ function toggleFaq(btn) {
       "svc.merc.t":"Droit Commercial","svc.merc.d":"Conseil juridique pour les sociétés et les indépendants. Spécialistes du droit des faillites et de la loi de la Seconde Chance pour les particuliers et les entreprises qui doivent retrouver leur stabilité financière.","svc.merc.l":"<li>Constitution, fusion, scission ou dissolution de sociétés</li><li>Contrats commerciaux</li><li>Recouvrement de créances</li><li>Conseil aux indépendants et PME</li><li>Loi de la Seconde Chance — annulation de dettes</li>",
       "svc.lab.t":"Droit du Travail","svc.lab.d":"Nous assistons les salariés sur toutes les questions liées à leur vie professionnelle. Nous conseillons les entreprises pour instaurer un climat de travail optimal grâce à la médiation, la conciliation et la résolution des conflits.","svc.lab.l":"<li>Réclamations salariales et licenciements</li><li>Conciliation vie familiale et professionnelle</li><li>Reprises, incapacités et retraite</li><li>Médiation, conciliation et résolution des conflits</li><li>Accidents du travail</li>",
       "svc.fam.t":"Droit de la Famille","svc.fam.d":"Nous guidons les personnes dans les moments les plus importants et complexes avec proximité, clarté et rigueur juridique. Nous protégeons ce qui compte le plus avec discrétion et respect.","svc.fam.l":"<li>Divorces et séparations à l'amiable ou contentieux</li><li>Garde, droit de visite et pensions</li><li>Modification des mesures parentales</li><li>Liquidation du régime matrimonial</li><li>Actions en filiation (paternité, maternité)</li>",
-      "casos.label":"Résultats concrets","casos.title":"Des affaires que nous avons<br><em>résolues</em>","casos.disclaimer":"Affaires réelles de clients, anonymisées pour protéger leur vie privée. Les résultats sont indicatifs : chaque affaire dépend de ses circonstances et ne garantit pas un résultat identique.",
-      "caso.1.tag":"Seconde Chance","caso.1.m":"Dette <em>effacée</em>","caso.1.d":"Indépendant endetté auprès de plusieurs créanciers. Nous avons engagé la procédure d'effacement des dettes (BEPI) et le tribunal a ordonné l'annulation de la dette restante, lui permettant de repartir à zéro.","caso.1.r":"Effacement accordé",
+      "casos.label":"Résultats concrets","casos.title":"Des affaires que nous avons<br><em>résolues</em>","casos.disclaimer":"Affaires réelles de clients. Les témoignages vidéo sont publiés avec l'autorisation expresse du client ; les autres sont anonymisés pour protéger leur vie privée. Les résultats sont indicatifs : chaque affaire dépend de ses circonstances.",
+      "caso.1.tag":"Seconde Chance","caso.1.m":"Dette <em>effacée</em>","caso.1.d":"Indépendant endetté auprès de plusieurs créanciers. Nous avons engagé la procédure d'effacement des dettes (BEPI) et le tribunal a ordonné l'annulation de la dette restante, lui permettant de repartir à zéro.","caso.1.r":"Effacement accordé","caso.1.video":"Voir le témoignage en vidéo",
       "caso.2.tag":"Immigration","caso.2.m":"Résidence <em>obtenue</em>","caso.2.d":"Personne en situation irrégulière après un premier refus. Nous avons réuni les documents, prouvé son ancrage et son intégration, et obtenu le titre de séjour lui permettant de vivre et travailler en toute légalité.","caso.2.r":"Autorisation accordée",
       "caso.3.tag":"Droit du Travail","caso.3.m":"Licenciement <em>abusif</em>","caso.3.d":"Salarié licencié sans cause réelle. Nous avons contesté le licenciement, reconnu abusif, avec l'indemnité et les sommes dues légalement.","caso.3.r":"Indemnité reconnue",
       "proc.label":"Notre méthode","proc.title":"Votre dossier, étape<br>par <em>étape</em>","proc.s1t":"Première consultation","proc.s1d":"Gratuite et sans engagement. Nous analysons votre situation et vous expliquons vos options réelles. En personne ou en ligne.","proc.s2t":"Étude du dossier","proc.s2d":"Nous examinons tous les documents et concevons la stratégie la plus solide pour votre dossier.","proc.s3t":"Gestion complète","proc.s3d":"Nous prenons en charge toutes les démarches, délais et communications. Vous faites confiance, nous agissons.","proc.s4t":"Résolution","proc.s4d":"Nous vous informons de chaque avancée et vous accompagnons jusqu'à la résolution définitive de votre dossier.",
@@ -1399,8 +1454,8 @@ function toggleFaq(btn) {
       "svc.merc.t":"Direito Comercial","svc.merc.d":"Assessoria jurídica para sociedades e trabalhadores independentes. Especialistas em direito da insolvência e da Segunda Oportunidade para pessoas e empresas que precisam de recuperar a estabilidade económica.","svc.merc.l":"<li>Constituição, fusão, cisão ou dissolução de sociedades</li><li>Contratos comerciais</li><li>Cobrança de dívidas</li><li>Assessoria a independentes e PME</li><li>Lei da Segunda Oportunidade — cancelamento de dívidas</li>",
       "svc.lab.t":"Direito Laboral","svc.lab.d":"Apoiamos os trabalhadores em questões relacionadas com a sua vida laboral. Orientamos as empresas para alcançar um bom clima laboral através de mediação, conciliação e resolução de conflitos.","svc.lab.l":"<li>Reclamações salariais e despedimentos</li><li>Conciliação da vida familiar e laboral</li><li>Altas médicas, incapacidades e reforma</li><li>Mediação, conciliação e resolução de conflitos</li><li>Acidentes de trabalho</li>",
       "svc.fam.t":"Direito da Família","svc.fam.d":"Conduzimos as pessoas nos momentos mais importantes e complexos com proximidade, clareza e rigor jurídico. Protegemos o que mais importa com discrição e respeito.","svc.fam.l":"<li>Divórcios e separações por mútuo acordo ou litigiosas</li><li>Guarda, regime de visitas e pensões</li><li>Alteração das medidas parentais</li><li>Partilha do regime económico matrimonial</li><li>Ações de filiação (paternidade, maternidade)</li>",
-      "casos.label":"Resultados reais","casos.title":"Casos que já<br><em>resolvemos</em>","casos.disclaimer":"Casos reais de clientes, anonimizados para proteger a sua privacidade. Os resultados são indicativos: cada caso depende das suas circunstâncias e não garante um desfecho idêntico.",
-      "caso.1.tag":"Segunda Oportunidade","caso.1.m":"Dívida <em>exonerada</em>","caso.1.d":"Trabalhador independente com dívidas a vários credores. Tratámos do Benefício de Exoneração do Passivo Insatisfeito (BEPI) e o tribunal decretou o cancelamento da dívida pendente, permitindo-lhe recomeçar.","caso.1.r":"Exoneração concedida",
+      "casos.label":"Resultados reais","casos.title":"Casos que já<br><em>resolvemos</em>","casos.disclaimer":"Casos reais de clientes. Os testemunhos em vídeo são publicados com a autorização expressa do cliente; os restantes são anonimizados para proteger a sua privacidade. Os resultados são indicativos: cada caso depende das suas circunstâncias.",
+      "caso.1.tag":"Segunda Oportunidade","caso.1.m":"Dívida <em>exonerada</em>","caso.1.d":"Trabalhador independente com dívidas a vários credores. Tratámos do Benefício de Exoneração do Passivo Insatisfeito (BEPI) e o tribunal decretou o cancelamento da dívida pendente, permitindo-lhe recomeçar.","caso.1.r":"Exoneração concedida","caso.1.video":"Ver o testemunho em vídeo",
       "caso.2.tag":"Estrangeiros","caso.2.m":"Residência <em>obtida</em>","caso.2.d":"Pessoa em situação irregular após uma primeira recusa. Reunimos a documentação, comprovámos a ligação e a integração e obtivemos a autorização de residência que lhe permite viver e trabalhar com plenas garantias.","caso.2.r":"Autorização aprovada",
       "caso.3.tag":"Direito Laboral","caso.3.m":"Despedimento <em>ilícito</em>","caso.3.d":"Trabalhador despedido sem justa causa. Impugnámos o despedimento, reconhecido como ilícito, com a indemnização e os montantes em dívida legalmente devidos.","caso.3.r":"Indemnização reconhecida",
       "proc.label":"Como trabalhamos","proc.title":"O seu caso, passo<br>a <em>passo</em>","proc.s1t":"Primeira consulta","proc.s1d":"Gratuita e sem compromisso. Analisamos a sua situação e explicamos as opções reais que tem. Presencial ou online.","proc.s2t":"Estudo do caso","proc.s2d":"Revemos toda a documentação e desenhamos a estratégia mais sólida para o seu processo.","proc.s3t":"Gestão completa","proc.s3d":"Tratamos de todos os trâmites, prazos e comunicações. Você confia, nós atuamos.","proc.s4t":"Resolução","proc.s4d":"Informamo-lo de cada avanço e acompanhamo-lo até à resolução definitiva do seu caso.",
