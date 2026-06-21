@@ -132,6 +132,7 @@
   }
   .nav-name { font-family:'Playfair Display',serif; font-size:15px; font-weight:600; color:var(--black); letter-spacing:0.04em; }
   .nav-sub { font-size:9px; letter-spacing:0.3em; color:var(--mid); text-transform:uppercase; margin-top:2px; }
+  .nav-right { display:flex; align-items:center; gap:22px; }
   .nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
   .nav-links a { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--mid); text-decoration:none; transition:color .2s; }
   .nav-links a:hover { color:var(--black); }
@@ -719,13 +720,16 @@
       <div class="nav-sub">Abogados · Fraga</div>
     </div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#servicios" data-i18n="nav.servicios">Servicios</a></li>
-    <li><a href="#casos" data-i18n="nav.casos">Casos reales</a></li>
-    <li><a href="#actualidad" data-i18n="nav.blog">Blog</a></li>
-    <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
-    <li><a href="#area-clientes" data-i18n="nav.area">Área clientes</a></li>
-    <li class="lang-switch">
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#servicios" data-i18n="nav.servicios">Servicios</a></li>
+      <li><a href="#casos" data-i18n="nav.casos">Casos reales</a></li>
+      <li><a href="#actualidad" data-i18n="nav.blog">Blog</a></li>
+      <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+      <li><a href="#area-clientes" data-i18n="nav.area">Área clientes</a></li>
+      <li><a href="#contacto" class="nav-cta" data-i18n="nav.cta">Consulta gratuita</a></li>
+    </ul>
+    <div class="lang-switch">
       <button class="lang-btn" type="button" onclick="toggleLangMenu(event)" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>
         <span id="lang-current">ES</span>
@@ -737,9 +741,8 @@
         <button class="lang-opt" type="button" data-lang="fr" onclick="setLang('fr')" role="menuitem">Français</button>
         <button class="lang-opt" type="button" data-lang="pt" onclick="setLang('pt')" role="menuitem">Português</button>
       </div>
-    </li>
-    <li><a href="#contacto" class="nav-cta" data-i18n="nav.cta">Consulta gratuita</a></li>
-  </ul>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
