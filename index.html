@@ -935,6 +935,10 @@
         <p class="caso-desc" data-i18n="caso.2.d">Persona en situación irregular tras una primera denegación. Reunimos la documentación, acreditamos el arraigo y la integración, y conseguimos la autorización de residencia que le permite vivir y trabajar con plenas garantías.</p>
         <div class="caso-foot">
           <span class="caso-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="caso.2.r">Autorización aprobada</span></span>
+          <button class="caso-video-btn" type="button" onclick="openVideo('res')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <span data-i18n="caso.1.video">Ver el testimonio en vídeo</span>
+          </button>
         </div>
       </div>
 
@@ -1298,7 +1302,7 @@
 <div class="video-overlay" id="videoOverlay" onclick="closeVideoOutside(event)">
   <div class="video-modal">
     <button class="video-close" onclick="closeVideo()" aria-label="Cerrar">×</button>
-    <video id="testimonioVideo" controls playsinline preload="none" poster="/testimonios/segunda-oportunidad-poster.jpg">
+    <video id="testimonioVideo" data-key="seg" controls playsinline preload="none" poster="/testimonios/segunda-oportunidad-poster.jpg">
       <source src="/testimonios/segunda-oportunidad.mp4" type="video/mp4">
       Tu navegador no puede reproducir este vídeo.
     </video>
@@ -1340,10 +1344,24 @@ function closeBookingOutside(e) {
   if (e.target === document.getElementById('bookingOverlay')) closeBooking();
 }
 // ── Testimonio en vídeo (controles nativos: play/pausa, audio, barra de tiempo) ──
-function openVideo() {
+// Un solo modal para varios testimonios: openVideo(key) cambia la fuente si hace falta.
+var VIDEO_TESTIMONIOS = {
+  seg: { src: '/testimonios/segunda-oportunidad.mp4',  poster: '/testimonios/segunda-oportunidad-poster.jpg' },
+  res: { src: '/testimonios/residencia-obtenida.mp4',  poster: '/testimonios/residencia-obtenida-poster.jpg' }
+};
+function openVideo(key) {
+  key = key || 'seg';
+  var v = document.getElementById('testimonioVideo');
+  var cfg = VIDEO_TESTIMONIOS[key];
+  if (v && cfg && v.getAttribute('data-key') !== key) {
+    v.pause();
+    v.setAttribute('poster', cfg.poster);
+    v.setAttribute('src', cfg.src);
+    v.setAttribute('data-key', key);
+    v.load();
+  }
   document.getElementById('videoOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  var v = document.getElementById('testimonioVideo');
   if (v) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
 }
 function closeVideo() {
