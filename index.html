@@ -1302,7 +1302,9 @@
 <div class="video-overlay" id="videoOverlay" onclick="closeVideoOutside(event)">
   <div class="video-modal">
     <button class="video-close" onclick="closeVideo()" aria-label="Cerrar">×</button>
-    <video id="testimonioVideo" data-key="seg" controls playsinline preload="none" poster="/testimonios/segunda-oportunidad-poster.jpg">
+    <!-- controlsList/disablePictureInPicture: sin "Descargar", "Velocidad" ni PiP en el
+         menú del reproductor — es el testimonio de un cliente, no un vídeo descargable -->
+    <video id="testimonioVideo" data-key="seg" controls playsinline preload="none" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture poster="/testimonios/segunda-oportunidad-poster.jpg">
       <source src="/testimonios/segunda-oportunidad.mp4" type="video/mp4">
       Tu navegador no puede reproducir este vídeo.
     </video>
