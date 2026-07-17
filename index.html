@@ -457,6 +457,14 @@
   }
   .form-submit:hover { background:var(--red-dark); }
   .form-disclaimer { font-size:10px; color:var(--mid); text-align:center; margin-top:12px; line-height:1.6; }
+  .form-consent { display:flex; align-items:flex-start; gap:10px; margin:4px 0 16px; cursor:pointer; }
+  .form-consent input { margin-top:2px; width:15px; height:15px; flex-shrink:0; accent-color:var(--red); cursor:pointer; }
+  .form-consent span { font-size:11px; color:var(--mid); line-height:1.6; }
+  .form-consent.invalid span { color:var(--red); }
+  .form-error { font-size:12px; color:var(--red); text-align:center; margin-top:12px; line-height:1.6; }
+  .form-success { text-align:center; padding:24px 8px; }
+  .form-success-title { font-family:'Playfair Display',serif; font-style:italic; font-size:22px; color:var(--black); margin-bottom:10px; }
+  .form-success-desc { font-size:13px; color:var(--mid); line-height:1.7; max-width:40ch; margin:0 auto; }
 
   /* ── RESERVAR CITA ── */
   .reserva-divider { display:flex; align-items:center; gap:14px; margin:32px 0; }
@@ -1242,37 +1250,38 @@
           <div class="channel-body" id="ch-form-body">
             <div class="channel-body-min">
               <div class="channel-body-inner">
+              <form id="cjLeadForm" novalidate>
               <div class="form-row">
         <div class="form-group">
-          <label class="form-label" data-i18n="form.nombre">Nombre</label>
-          <input type="text" class="form-input" placeholder="Tu nombre" data-i18n-attr="placeholder:form.nombre.ph">
+          <label class="form-label" for="cj-nombre" data-i18n="form.nombre">Nombre</label>
+          <input type="text" id="cj-nombre" name="nombre" required class="form-input" placeholder="Tu nombre" data-i18n-attr="placeholder:form.nombre.ph">
         </div>
         <div class="form-group">
-          <label class="form-label" data-i18n="form.apellidos">Apellidos</label>
-          <input type="text" class="form-input" placeholder="Tus apellidos" data-i18n-attr="placeholder:form.apellidos.ph">
+          <label class="form-label" for="cj-apellidos" data-i18n="form.apellidos">Apellidos</label>
+          <input type="text" id="cj-apellidos" name="apellidos" class="form-input" placeholder="Tus apellidos" data-i18n-attr="placeholder:form.apellidos.ph">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label" data-i18n="form.tel">Teléfono</label>
-          <input type="tel" class="form-input" placeholder="+34 600 000 000">
+          <label class="form-label" for="cj-tel" data-i18n="form.tel">Teléfono</label>
+          <input type="tel" id="cj-tel" name="telefono" class="form-input" placeholder="+34 600 000 000">
         </div>
         <div class="form-group">
-          <label class="form-label" data-i18n="form.email">Email</label>
-          <input type="email" class="form-input" placeholder="tu@email.com">
+          <label class="form-label" for="cj-email" data-i18n="form.email">Email</label>
+          <input type="email" id="cj-email" name="email" class="form-input" placeholder="tu@email.com">
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label" data-i18n="form.modalidad">Modalidad</label>
-        <select class="form-input" required>
+        <label class="form-label" for="cj-modalidad" data-i18n="form.modalidad">Modalidad</label>
+        <select id="cj-modalidad" name="modalidad" class="form-input" required>
           <option value="" disabled selected data-i18n="form.modalidad.ph">Presencial u online</option>
           <option value="presencial" data-i18n="form.modalidad.o1">Presencial en despacho</option>
           <option value="online" data-i18n="form.modalidad.o2">Online (videollamada)</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label" data-i18n="form.area">Área de consulta</label>
-        <select class="form-input" required>
+        <label class="form-label" for="cj-area" data-i18n="form.area">Área de consulta</label>
+        <select id="cj-area" name="area" class="form-input" required>
           <option value="" disabled selected data-i18n="form.area.ph">Selecciona un área</option>
           <option value="extranjeria" data-i18n="form.area.o1">Nacionalidad y Extranjería</option>
           <option value="mercantil" data-i18n="form.area.o2">Derecho Mercantil</option>
@@ -1283,11 +1292,21 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label" data-i18n="form.mensaje">Cuéntanos tu situación</label>
-        <textarea class="form-input" placeholder="Describe brevemente tu caso..." data-i18n-attr="placeholder:form.mensaje.ph"></textarea>
+        <label class="form-label" for="cj-mensaje" data-i18n="form.mensaje">Cuéntanos tu situación</label>
+        <textarea id="cj-mensaje" name="mensaje" class="form-input" placeholder="Describe brevemente tu caso..." data-i18n-attr="placeholder:form.mensaje.ph"></textarea>
       </div>
-              <button class="form-submit" data-i18n="form.submit">Solicitar consulta gratuita</button>
+      <label class="form-consent">
+        <input type="checkbox" id="cj-consent" required>
+        <span data-i18n="form.consent">Acepto que Cónsul Jurídico trate mis datos para responder a mi consulta. Puedes ejercer tus derechos de acceso, rectificación y supresión en info@consuljuridico.com.</span>
+      </label>
+              <button type="submit" class="form-submit" id="cjLeadSubmit" data-i18n="form.submit">Solicitar consulta gratuita</button>
+              <p class="form-error" id="cjLeadError" hidden data-i18n="form.err">No se pudo enviar. Inténtalo de nuevo o llámanos al +34 626 81 88 75.</p>
               <p class="form-disclaimer" data-i18n="form.disclaimer">Tus datos son confidenciales y se usan únicamente para atender tu consulta. Primera consulta siempre gratuita.</p>
+              </form>
+              <div class="form-success" id="cjLeadSuccess" hidden>
+                <p class="form-success-title" data-i18n="form.ok.t">Consulta recibida. ✓</p>
+                <p class="form-success-desc" data-i18n="form.ok.d">Gracias por confiar en nosotros. Te contactaremos en menos de 24 horas laborables. Si tu caso es urgente, llámanos al +34 626 81 88 75.</p>
+              </div>
               </div><!-- /channel-body-inner -->
             </div><!-- /channel-body-min -->
           </div><!-- /channel-body -->
@@ -1412,6 +1431,87 @@ function toggleFaq(btn) {
   item.classList.toggle('open', willOpen);
   btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 }
+
+// ── Formulario de contacto → CRM VELIA Legal (contacto + deal en el pipeline
+//    + auto-respuesta al lead + aviso al despacho). Errores SIEMPRE visibles. ──
+(function () {
+  var LEAD_API = 'https://app.veliacorp.com/api/public-lead';
+  // Mapeo al vocabulario area_legal del CRM; lo que no encaja va como texto en el mensaje
+  var AREA_MAP = { extranjeria: 'extranjeria', mercantil: 'mercantil', 'segunda-oportunidad': 'mercantil', laboral: 'laboral', familia: 'familia', otra: null };
+  var form = document.getElementById('cjLeadForm');
+  if (!form) return;
+  var sending = false;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sending) return;
+
+    var nombre = document.getElementById('cj-nombre').value.trim();
+    var apellidos = document.getElementById('cj-apellidos').value.trim();
+    var tel = document.getElementById('cj-tel').value.trim();
+    var email = document.getElementById('cj-email').value.trim();
+    var modalidad = document.getElementById('cj-modalidad').value;
+    var areaSel = document.getElementById('cj-area');
+    var area = areaSel.value;
+    var mensaje = document.getElementById('cj-mensaje').value.trim();
+    var consent = document.getElementById('cj-consent');
+    var errEl = document.getElementById('cjLeadError');
+    var btn = document.getElementById('cjLeadSubmit');
+
+    // Validación nativa (required) + al menos un medio de contacto + consentimiento
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (!tel && !email) {
+      document.getElementById('cj-email').setCustomValidity('Indica un teléfono o un email para poder responderte.');
+      form.reportValidity();
+      document.getElementById('cj-email').setCustomValidity('');
+      return;
+    }
+    if (!consent.checked) {
+      consent.closest('.form-consent').classList.add('invalid');
+      return;
+    }
+    consent.closest('.form-consent').classList.remove('invalid');
+
+    // Si el área elegida no existe en el CRM, se conserva como texto en el mensaje
+    var areaLabel = areaSel.options[areaSel.selectedIndex] ? areaSel.options[areaSel.selectedIndex].textContent : '';
+    var mensajeFinal = (AREA_MAP[area] === null || AREA_MAP[area] !== area)
+      ? ('[' + areaLabel + '] ' + mensaje).trim()
+      : mensaje;
+
+    sending = true;
+    errEl.hidden = true;
+    var btnOriginal = btn.textContent;
+    btn.textContent = '…';
+    btn.disabled = true;
+
+    fetch(LEAD_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        slug: 'consul-juridico',
+        name: (nombre + ' ' + apellidos).trim(),
+        email: email || null,
+        phone: tel || null,
+        area: AREA_MAP[area] || null,
+        modalidad: modalidad || null,
+        message: mensajeFinal || null,
+        consent: true,
+        consent_at: new Date().toISOString(),
+        source: 'consuljuridico.com',
+      }),
+    }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      form.hidden = true;
+      document.getElementById('cjLeadSuccess').hidden = false;
+    }).catch(function () {
+      errEl.hidden = false;
+    }).finally(function () {
+      sending = false;
+      btn.textContent = btnOriginal;
+      btn.disabled = false;
+    });
+  });
+})();
 </script>
 
 <!-- SELECTOR DE IDIOMA (i18n) -->
@@ -1440,7 +1540,7 @@ function toggleFaq(btn) {
       "blog.label":"News","blog.title":"Legal <em>blog</em>","blog.all":"View all posts →","blog.more":"Read more →","blog.p1t":"Second Chance Law: how to cancel your debts","blog.p1e":"Who can apply, what the law requires and the steps to get your debts discharged and start over.","blog.p2t":"Spanish nationality by residence: requirements and timelines","blog.p2e":"Years of residence by case, the CCSE and DELE exams, required documents and how long resolution takes today.","blog.p3t":"Unfair dismissal: the compensation you are entitled to","blog.p3e":"The difference between fair, unfair and void dismissal, how compensation is calculated and the 20-working-day limit to claim.",
       "faq.label":"Frequently asked questions","faq.title":"We answer your <em>questions</em>","faq.q1":"Is the first consultation really free?","faq.a1":"Yes, with no cost or obligation. In the first consultation we analyse your situation and honestly explain the real options you have. It can be in person at our Fraga office or by video call.","faq.q2":"Do you take clients from outside Spain?","faq.a2":"Yes. We work in person in Fraga and online for clients anywhere in the world. In immigration and nationality we handle cases whether you are in Spain or abroad.","faq.q3":"Can I cancel my debts with the Second Chance Law?","faq.a3":"In many cases, yes. If you are an individual or self-employed person acting in good faith and your debts exceed your ability to pay, you may qualify for a discharge. We study your case and tell you whether you meet the requirements before starting.","faq.q4":"I've been dismissed, how long do I have to claim?","faq.a4":"Only 20 working days from the date of dismissal. It is a strict time limit, so it's best to consult us as soon as possible so you don't lose your rights.","faq.q5":"How long does a nationality or immigration procedure take?","faq.a5":"It depends on the type of file and the administration's workload. The most important thing is to submit it complete and well-founded from the start: a documentation error is the most common cause of delay or refusal.","faq.q6":"How do I know how much it will cost?","faq.a6":"After the free first consultation we give you a clear, fixed quote with no surprises. You'll know in advance what's included and how it's billed before making any decision.",
       "con.label":"Contact","con.title":"Tell us<br>your <em>situation.</em>","con.intro":"The first consultation is always free and with no obligation. We analyse your case and honestly tell you what we can do for you. We assist in person and online.","con.desp":"Office","con.desp.sub":"In-person and remote assistance","con.tel":"Phone","con.tel.sub":"Monday to Friday · 9:00 – 19:00","con.email":"Email","con.email.sub":"Reply within 24 hours","con.online":"Online consultation","con.online.val":"Available by video call","con.online.sub":"Manage your case from anywhere","con.ch1.t":"Book an appointment online","con.ch1.s":"Pick a date and time · 60 min · free","con.ch1.lead":"Book directly in Cónsul Jurídico's calendar. A free 60-minute first consultation, in person or online.","con.ch2.t":"Contact form","con.ch2.s":"Tell us your case · reply within 24h",
-      "form.nombre":"First name","form.nombre.ph":"Your first name","form.apellidos":"Surname","form.apellidos.ph":"Your surname","form.tel":"Phone","form.email":"Email","form.modalidad":"Format","form.modalidad.ph":"In person or online","form.modalidad.o1":"In person at the office","form.modalidad.o2":"Online (video call)","form.area":"Area of enquiry","form.area.ph":"Select an area","form.area.o1":"Nationality & Immigration","form.area.o2":"Commercial Law","form.area.o3":"Second Chance","form.area.o4":"Employment Law","form.area.o5":"Family Law","form.area.o6":"Other legal enquiry","form.mensaje":"Tell us your situation","form.mensaje.ph":"Briefly describe your case...","form.submit":"Request a free consultation","form.disclaimer":"Your data is confidential and used solely to handle your enquiry. First consultation always free.",
+      "form.nombre":"First name","form.nombre.ph":"Your first name","form.apellidos":"Surname","form.apellidos.ph":"Your surname","form.tel":"Phone","form.email":"Email","form.modalidad":"Format","form.modalidad.ph":"In person or online","form.modalidad.o1":"In person at the office","form.modalidad.o2":"Online (video call)","form.area":"Area of enquiry","form.area.ph":"Select an area","form.area.o1":"Nationality & Immigration","form.area.o2":"Commercial Law","form.area.o3":"Second Chance","form.area.o4":"Employment Law","form.area.o5":"Family Law","form.area.o6":"Other legal enquiry","form.mensaje":"Tell us your situation","form.mensaje.ph":"Briefly describe your case...","form.submit":"Request a free consultation","form.disclaimer":"Your data is confidential and used solely to handle your enquiry. First consultation always free.","form.consent":"I agree that Cónsul Jurídico may process my data to answer my enquiry. You can exercise your rights of access, rectification and erasure at info@consuljuridico.com.","form.err":"It could not be sent. Try again or call us at +34 626 81 88 75.","form.ok.t":"Enquiry received. ✓","form.ok.d":"Thank you for trusting us. We will contact you within 24 working hours. If your case is urgent, call us at +34 626 81 88 75.",
       "footer.copy":"© 2026 Iván Cónsul Gómez · All rights reserved","footer.velia":"Built by <span>VELIA</span>","booking.title":"Book your free consultation"
     },
     fr: {
@@ -1463,7 +1563,7 @@ function toggleFaq(btn) {
       "blog.label":"Actualités","blog.title":"Blog <em>juridique</em>","blog.all":"Voir tous les articles →","blog.more":"Lire la suite →","blog.p1t":"Loi de la Seconde Chance : comment annuler vos dettes","blog.p1e":"Qui peut en bénéficier, les conditions exigées par la loi et les étapes pour effacer vos dettes et repartir à zéro.","blog.p2t":"Nationalité espagnole par résidence : conditions et délais","blog.p2e":"Années de résidence selon votre cas, examens CCSE et DELE, documents requis et délais actuels de résolution.","blog.p3t":"Licenciement abusif : l'indemnité à laquelle vous avez droit","blog.p3e":"La différence entre licenciement justifié, abusif et nul, le calcul de l'indemnité et le délai de 20 jours ouvrables pour agir.",
       "faq.label":"Questions fréquentes","faq.title":"Nous répondons à vos <em>questions</em>","faq.q1":"La première consultation est-elle vraiment gratuite ?","faq.a1":"Oui, sans frais ni engagement. Lors de la première consultation, nous analysons votre situation et vous expliquons honnêtement vos options réelles. En personne à notre cabinet de Fraga ou par visioconférence.","faq.q2":"Acceptez-vous des clients hors d'Espagne ?","faq.a2":"Oui. Nous travaillons en personne à Fraga et en ligne pour des clients partout dans le monde. En immigration et nationalité, nous gérons des dossiers que vous soyez en Espagne ou à l'étranger.","faq.q3":"Puis-je annuler mes dettes avec la loi de la Seconde Chance ?","faq.a3":"Dans de nombreux cas, oui. Si vous êtes un particulier ou un indépendant de bonne foi et que vos dettes dépassent votre capacité de paiement, vous pouvez bénéficier de l'effacement. Nous étudions votre cas et vous disons si vous remplissez les conditions avant de commencer.","faq.q4":"J'ai été licencié, combien de temps ai-je pour agir ?","faq.a4":"Seulement 20 jours ouvrables à compter de la date du licenciement. C'est un délai strict, il vaut donc mieux nous consulter au plus vite pour ne pas perdre vos droits.","faq.q5":"Combien de temps prend une démarche de nationalité ou d'immigration ?","faq.a5":"Cela dépend du type de dossier et de la charge de l'administration. L'essentiel est de le déposer complet et bien étayé dès le départ : une erreur de documentation est la cause la plus fréquente de retard ou de refus.","faq.q6":"Comment savoir combien cela va coûter ?","faq.a6":"Après la première consultation gratuite, nous vous remettons un devis clair et ferme, sans surprises. Vous saurez à l'avance ce qui est inclus et comment c'est facturé avant toute décision.",
       "con.label":"Contact","con.title":"Parlez-nous<br>de votre <em>situation.</em>","con.intro":"La première consultation est toujours gratuite et sans engagement. Nous analysons votre cas et vous disons honnêtement ce que nous pouvons faire. En personne et en ligne.","con.desp":"Cabinet","con.desp.sub":"Accueil en personne et à distance","con.tel":"Téléphone","con.tel.sub":"Du lundi au vendredi · 9h00 – 19h00","con.email":"E-mail","con.email.sub":"Réponse en moins de 24 heures","con.online":"Consultation en ligne","con.online.val":"Disponible par visioconférence","con.online.sub":"Gérez votre dossier où que vous soyez","con.ch1.t":"Prendre rendez-vous en ligne","con.ch1.s":"Choisissez date et heure · 60 min · gratuit","con.ch1.lead":"Réservez directement dans l'agenda de Cónsul Jurídico. Première consultation gratuite de 60 minutes, en personne ou en ligne.","con.ch2.t":"Formulaire de contact","con.ch2.s":"Exposez votre cas · réponse sous 24h",
-      "form.nombre":"Prénom","form.nombre.ph":"Votre prénom","form.apellidos":"Nom","form.apellidos.ph":"Votre nom","form.tel":"Téléphone","form.email":"E-mail","form.modalidad":"Modalité","form.modalidad.ph":"En personne ou en ligne","form.modalidad.o1":"En personne au cabinet","form.modalidad.o2":"En ligne (visioconférence)","form.area":"Domaine de la demande","form.area.ph":"Choisissez un domaine","form.area.o1":"Nationalité et Immigration","form.area.o2":"Droit Commercial","form.area.o3":"Seconde Chance","form.area.o4":"Droit du Travail","form.area.o5":"Droit de la Famille","form.area.o6":"Autre demande juridique","form.mensaje":"Décrivez votre situation","form.mensaje.ph":"Décrivez brièvement votre cas...","form.submit":"Demander une consultation gratuite","form.disclaimer":"Vos données sont confidentielles et utilisées uniquement pour traiter votre demande. Première consultation toujours gratuite.",
+      "form.nombre":"Prénom","form.nombre.ph":"Votre prénom","form.apellidos":"Nom","form.apellidos.ph":"Votre nom","form.tel":"Téléphone","form.email":"E-mail","form.modalidad":"Modalité","form.modalidad.ph":"En personne ou en ligne","form.modalidad.o1":"En personne au cabinet","form.modalidad.o2":"En ligne (visioconférence)","form.area":"Domaine de la demande","form.area.ph":"Choisissez un domaine","form.area.o1":"Nationalité et Immigration","form.area.o2":"Droit Commercial","form.area.o3":"Seconde Chance","form.area.o4":"Droit du Travail","form.area.o5":"Droit de la Famille","form.area.o6":"Autre demande juridique","form.mensaje":"Décrivez votre situation","form.mensaje.ph":"Décrivez brièvement votre cas...","form.submit":"Demander une consultation gratuite","form.disclaimer":"Vos données sont confidentielles et utilisées uniquement pour traiter votre demande. Première consultation toujours gratuite.","form.consent":"J'accepte que Cónsul Jurídico traite mes données pour répondre à ma demande. Vous pouvez exercer vos droits d'accès, de rectification et de suppression à info@consuljuridico.com.","form.err":"L'envoi a échoué. Réessayez ou appelez-nous au +34 626 81 88 75.","form.ok.t":"Demande reçue. ✓","form.ok.d":"Merci de votre confiance. Nous vous contacterons sous 24 heures ouvrées. Si votre cas est urgent, appelez-nous au +34 626 81 88 75.",
       "footer.copy":"© 2026 Iván Cónsul Gómez · Tous droits réservés","footer.velia":"Développé par <span>VELIA</span>","booking.title":"Réservez votre consultation gratuite"
     },
     pt: {
@@ -1486,7 +1586,7 @@ function toggleFaq(btn) {
       "blog.label":"Atualidade","blog.title":"Blog <em>jurídico</em>","blog.all":"Ver todas as entradas →","blog.more":"Ler mais →","blog.p1t":"Lei da Segunda Oportunidade: como cancelar as suas dívidas","blog.p1e":"Quem se pode acolher, que requisitos a lei exige e os passos para conseguir a exoneração das suas dívidas e recomeçar.","blog.p2t":"Nacionalidade espanhola por residência: requisitos e prazos","blog.p2e":"Anos de residência conforme o seu caso, exames CCSE e DELE, documentação necessária e quanto demora hoje a resolução do processo.","blog.p3t":"Despedimento ilícito: que indemnização lhe corresponde","blog.p3e":"A diferença entre despedimento lícito, ilícito e nulo, como se calcula a indemnização e o prazo de 20 dias úteis para reclamar.",
       "faq.label":"Perguntas frequentes","faq.title":"Esclarecemos as suas <em>dúvidas</em>","faq.q1":"A primeira consulta é mesmo gratuita?","faq.a1":"Sim, sem custo nem compromisso. Na primeira consulta analisamos a sua situação e explicamos com honestidade as opções reais que tem. Pode ser presencial no nosso escritório em Fraga ou por videochamada.","faq.q2":"Atendem clientes fora de Espanha?","faq.a2":"Sim. Trabalhamos presencialmente em Fraga e online para clientes de qualquer parte do mundo. Em estrangeiros e nacionalidade tratamos de processos esteja onde estiver, em Espanha ou no estrangeiro.","faq.q3":"Posso cancelar as minhas dívidas com a Lei da Segunda Oportunidade?","faq.a3":"Em muitos casos, sim. Se for particular ou trabalhador independente de boa-fé e as suas dívidas ultrapassarem a sua capacidade de pagamento, pode aceder à exoneração. Estudamos o seu caso e dizemos-lhe se cumpre os requisitos antes de começar.","faq.q4":"Fui despedido, quanto tempo tenho para reclamar?","faq.a4":"Apenas 20 dias úteis a contar da data do despedimento. É um prazo de caducidade muito rígido, por isso convém consultar-nos o quanto antes para não perder os seus direitos.","faq.q5":"Quanto demora um processo de nacionalidade ou de estrangeiros?","faq.a5":"Depende do tipo de processo e da carga da Administração. O mais importante é apresentá-lo completo e bem fundamentado desde o início: um erro na documentação é a causa mais frequente de atraso ou indeferimento.","faq.q6":"Como sei quanto me vai custar?","faq.a6":"Após a primeira consulta gratuita damos-lhe um orçamento claro e fechado, sem surpresas. Saberá de antemão o que inclui e como é faturado antes de tomar qualquer decisão.",
       "con.label":"Contacto","con.title":"Conte-nos<br>a sua <em>situação.</em>","con.intro":"A primeira consulta é sempre gratuita e sem compromisso. Analisamos o seu caso e dizemos-lhe com honestidade o que podemos fazer por si. Atendemos presencialmente e online.","con.desp":"Escritório","con.desp.sub":"Atendimento presencial e telemático","con.tel":"Telefone","con.tel.sub":"Segunda a sexta · 9:00 – 19:00","con.email":"Email","con.email.sub":"Resposta em menos de 24 horas","con.online":"Consulta online","con.online.val":"Disponível por videochamada","con.online.sub":"Faça a gestão do seu caso a partir de qualquer lugar","con.ch1.t":"Marcar consulta online","con.ch1.s":"Escolha data e hora · 60 min · grátis","con.ch1.lead":"Reserve diretamente no calendário da Cónsul Jurídico. Primeira consulta gratuita de 60 minutos, presencial ou online.","con.ch2.t":"Formulário de contacto","con.ch2.s":"Conte-nos o seu caso · resposta em 24h",
-      "form.nombre":"Nome","form.nombre.ph":"O seu nome","form.apellidos":"Apelidos","form.apellidos.ph":"Os seus apelidos","form.tel":"Telefone","form.email":"Email","form.modalidad":"Modalidade","form.modalidad.ph":"Presencial ou online","form.modalidad.o1":"Presencial no escritório","form.modalidad.o2":"Online (videochamada)","form.area":"Área da consulta","form.area.ph":"Selecione uma área","form.area.o1":"Nacionalidade e Estrangeiros","form.area.o2":"Direito Comercial","form.area.o3":"Segunda Oportunidade","form.area.o4":"Direito Laboral","form.area.o5":"Direito da Família","form.area.o6":"Outra consulta jurídica","form.mensaje":"Conte-nos a sua situação","form.mensaje.ph":"Descreva brevemente o seu caso...","form.submit":"Solicitar consulta gratuita","form.disclaimer":"Os seus dados são confidenciais e usados apenas para atender a sua consulta. Primeira consulta sempre gratuita.",
+      "form.nombre":"Nome","form.nombre.ph":"O seu nome","form.apellidos":"Apelidos","form.apellidos.ph":"Os seus apelidos","form.tel":"Telefone","form.email":"Email","form.modalidad":"Modalidade","form.modalidad.ph":"Presencial ou online","form.modalidad.o1":"Presencial no escritório","form.modalidad.o2":"Online (videochamada)","form.area":"Área da consulta","form.area.ph":"Selecione uma área","form.area.o1":"Nacionalidade e Estrangeiros","form.area.o2":"Direito Comercial","form.area.o3":"Segunda Oportunidade","form.area.o4":"Direito Laboral","form.area.o5":"Direito da Família","form.area.o6":"Outra consulta jurídica","form.mensaje":"Conte-nos a sua situação","form.mensaje.ph":"Descreva brevemente o seu caso...","form.submit":"Solicitar consulta gratuita","form.disclaimer":"Os seus dados são confidenciais e usados apenas para atender a sua consulta. Primeira consulta sempre gratuita.","form.consent":"Aceito que a Cónsul Jurídico trate os meus dados para responder à minha consulta. Pode exercer os seus direitos de acesso, retificação e eliminação em info@consuljuridico.com.","form.err":"Não foi possível enviar. Tente novamente ou ligue para +34 626 81 88 75.","form.ok.t":"Consulta recebida. ✓","form.ok.d":"Obrigado pela sua confiança. Contactá-lo-emos em menos de 24 horas úteis. Se o seu caso for urgente, ligue para +34 626 81 88 75.",
       "footer.copy":"© 2026 Iván Cónsul Gómez · Todos os direitos reservados","footer.velia":"Desenvolvido por <span>VELIA</span>","booking.title":"Reserve a sua consulta gratuita"
     }
   };
