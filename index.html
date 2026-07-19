@@ -1295,6 +1295,10 @@
         <label class="form-label" for="cj-mensaje" data-i18n="form.mensaje">Cuéntanos tu situación</label>
         <textarea id="cj-mensaje" name="mensaje" class="form-input" placeholder="Describe brevemente tu caso..." data-i18n-attr="placeholder:form.mensaje.ph"></textarea>
       </div>
+      <!-- Honeypot anti-bot: invisible para humanos; los bots lo rellenan y el
+           servidor descarta el envío en silencio (spam real 19-jul-2026). -->
+      <input type="text" id="cj-hp" name="empresa_web" tabindex="-1" autocomplete="off" aria-hidden="true"
+        style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0;pointer-events:none">
       <label class="form-consent">
         <input type="checkbox" id="cj-consent" required>
         <span data-i18n="form.consent">Acepto que Cónsul Jurídico trate mis datos para responder a mi consulta. Puedes ejercer tus derechos de acceso, rectificación y supresión en info@consuljuridico.com.</span>
@@ -1495,6 +1499,7 @@ function toggleFaq(btn) {
         area: AREA_MAP[area] || null,
         modalidad: modalidad || null,
         message: mensajeFinal || null,
+        hp: (document.getElementById('cj-hp') || { value: '' }).value || null,
         consent: true,
         consent_at: new Date().toISOString(),
         source: 'consuljuridico.com',
