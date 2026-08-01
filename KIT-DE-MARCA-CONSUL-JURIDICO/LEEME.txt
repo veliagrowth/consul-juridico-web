@@ -1,0 +1,51 @@
+CÓNSUL JURÍDICO — KIT DE RECURSOS DE MARCA
+===========================================
+Preparado por VELIA · AI · Powered Marketing
+Versión 1.0 · 2026
+
+CONTENIDO DE LA CARPETA
+─────────────────────────────────────────
+
+📄 CJ_Manual_Identidad_Corporativa.pdf
+   Manual completo de identidad corporativa (12 páginas)
+
+📁 logo-horizontal/
+   CJ_Logo_Horizontal_ORIGINAL.png       — Logo original (fondo negro)
+   CJ_Logo_Horizontal_Blanco.png         — Logo sobre fondo blanco
+   CJ_Logo_Horizontal_Crema.png          — Logo sobre fondo crema ← USO PRINCIPAL DIGITAL
+   CJ_Logo_Horizontal_Negativo_Negro.png — Versión negativa (blanco+rojo sobre negro)
+
+📁 logo-vertical/
+   CJ_Logo_Vertical_ORIGINAL.png         — Logo original (fondo negro)
+   CJ_Logo_Vertical_Blanco.png           — Logo sobre fondo blanco
+   CJ_Logo_Vertical_Crema.png            — Logo sobre fondo crema ← USO PRINCIPAL DIGITAL
+   CJ_Logo_Vertical_Negativo_Negro.png   — Versión negativa
+
+📁 isotipo/
+   CJ_Isotipo_Blanco.png                 — Isotipo sobre blanco
+   CJ_Isotipo_Crema.png                  — Isotipo sobre crema ← USO PRINCIPAL DIGITAL
+   CJ_Isotipo_Negativo_Negro.png         — Isotipo negativo sobre negro
+
+📁 redes-sociales/
+   CJ_Avatar_Perfil_Crema_1000x1000.png  — Foto de perfil (1000×1000px) ← USAR ESTO
+   CJ_Avatar_Perfil_Blanco_1000x1000.png — Foto de perfil alternativa
+   CJ_Banner_Portada_Crema_2400x900.png  — Banner/portada redes (2400×900px) ← USAR ESTO
+   CJ_Banner_Portada_Blanco_2400x900.png — Banner alternativo
+
+USO RECOMENDADO
+─────────────────────────────────────────
+• Web y redes sociales:   versión CREMA (fondo cálido, moderno)
+• Documentos impresos:    versión BLANCO
+• Papelería oscura:       versión NEGATIVA (negro)
+• Nunca modificar proporciones ni colores del logo
+
+COLORES CORPORATIVOS
+─────────────────────────────────────────
+Rojo Cónsul:  #CC0000  |  RGB 204,0,0   |  CMYK 0,100,100,20
+Negro:        #0A0A0A  |  RGB 10,10,10  |  CMYK 0,0,0,96
+Crema:        #EDE9E1  |  RGB 237,233,225
+
+CONTACTO
+─────────────────────────────────────────
+VELIA — hola@velia.es — velia.es
+Iván Cónsul Gómez — www.consuljuridico.com
