@@ -1,0 +1,62 @@
+# Avisa a Cónsul Jurídico cuando entra un borrador nuevo en el blog.
+#
+# POR QUÉ EXISTE: el encargo no era «manda un correo», era «avisa SIEMPRE que
+# haya entradas nuevas». Un aviso que depende de que alguien se acuerde de
+# mandarlo no es un aviso: es una intención. Esto lo ata al único momento en el
+# que de verdad aparece un borrador — cuando el fichero llega al repositorio.
+#
+# NO publica nada. Publicar sigue siendo una decisión de Iván; esto solo le dice
+# que hay algo esperándole.
+name: Aviso de borradores nuevos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog/_borradores/*.html'
+
+jobs:
+  avisar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Hacen falta dos commits para poder comparar qué ficheros son NUEVOS
+          # frente a los que solo se han retocado. Sin esto, corregir una errata
+          # en un borrador volvería a anunciarlo como si acabara de aparecer.
+          fetch-depth: 2
+
+      - name: Detectar borradores nuevos
+        id: nuevos
+        run: |
+          # Solo ficheros AÑADIDOS (A), no modificados.
+          lista=$(git diff --name-only --diff-filter=A HEAD^ HEAD -- 'blog/_borradores/*.html' || true)
+          if [ -z "$lista" ]; then
+            echo "Sin borradores nuevos: no hay nada que avisar."
+            echo "hay=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "hay=si" >> "$GITHUB_OUTPUT"
+            echo "$lista"
+            # Multilínea a GITHUB_OUTPUT necesita delimitador.
+            {
+              echo "lista<<FIN"
+              echo "$lista"
+              echo "FIN"
+            } >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Avisar por correo
+        if: steps.nuevos.outputs.hay == 'si'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          LISTA: ${{ steps.nuevos.outputs.lista }}
+        run: |
+          # Si falta la credencial, este paso FALLA (no se salta en silencio).
+          # Un avisador mudo y uno sano son la misma cosa —silencio— salvo que
+          # alguien haya puesto algo que grite cuando deja de funcionar.
+          if [ -z "$RESEND_API_KEY" ]; then
+            echo "::error::Falta el secreto RESEND_API_KEY en el repositorio."
+            echo "Añádelo en Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          node .github/scripts/avisar-borradores.mjs
