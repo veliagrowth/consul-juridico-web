@@ -1,0 +1,43 @@
+# ¿Sirve el secreto que este repositorio tiene guardado?
+#
+# POR QUÉ EXISTE: `aviso-borradores` solo se dispara cuando entra un borrador
+# nuevo, y su única forma de "probarse" es mandando un correo de verdad a Cónsul
+# Jurídico. Así que el día que se rota la clave de Resend no hay manera de saber
+# si el secreto quedó bien puesto sin molestar al cliente — y esperar al próximo
+# borrador es esperar a que falle en el peor momento.
+#
+# Esto pregunta a Resend por sus dominios: lectura pura, no manda nada. Solo
+# imprime el estado HTTP; el valor del secreto nunca sale por el registro.
+#
+# Se ejecuta a mano (Actions → Verificar credenciales → Run workflow) y cada
+# lunes, para que una clave muerta no espere a la siguiente publicación.
+name: Verificar credenciales
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 7 * * 1'
+
+jobs:
+  resend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resend responde a la clave guardada
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          if [ -z "$RESEND_API_KEY" ]; then
+            echo "::error::Falta el secreto RESEND_API_KEY."
+            exit 1
+          fi
+          # -s sin -S esconde los errores de red; con los dos, se ven.
+          codigo=$(curl -sS -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer $RESEND_API_KEY" \
+            https://api.resend.com/domains)
+          echo "GET /domains -> $codigo"
+          if [ "$codigo" != "200" ]; then
+            echo "::error::Resend rechaza la clave guardada en este repositorio (HTTP $codigo)."
+            echo "El aviso de borradores nuevos NO saldría. Rota o corrige el secreto."
+            exit 1
+          fi
+          echo "La clave guardada aquí es válida. El aviso de borradores puede salir."
